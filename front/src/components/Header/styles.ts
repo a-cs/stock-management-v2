@@ -60,11 +60,12 @@ export const MenuContainer = styled.div`
     }
 `
 
-export const MenuLink = styled(Link)`
+export const MenuLink = styled(Link)<{ $isCurrentPatch: boolean }>`
     font-size: 1.75rem;
     font-weight: 700;
     transition: 0.2s;
-    color: ${(props) => props.theme.black};
+    color: ${(props) =>
+        props.$isCurrentPatch ? props.theme.primary : props.theme.black};
     margin-right: 1.5rem;
 
     &:hover {
@@ -73,7 +74,8 @@ export const MenuLink = styled(Link)`
 `
 
 export const ProfileLink = styled(MenuLink)`
-    color: ${(props) => props.theme.text};
+    color: ${(props) =>
+        props.$isCurrentPatch ? props.theme.primary : props.theme.text};
     background-color: transparent;
     border: 0;
     display: flex;

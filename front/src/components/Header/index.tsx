@@ -15,8 +15,11 @@ import {
 
 import logoIFCE from '../../assets/logo_ifce_fortaleza.png'
 import { FiUser } from 'react-icons/fi'
+import { useLocation } from 'react-router-dom'
 
 export default function Header() {
+    const location = useLocation()
+    console.log('location:', location)
     const menuItems = []
     // if (user?.is_allowed) {
     menuItems.push('Estoque')
@@ -27,6 +30,8 @@ export default function Header() {
     //   if (user?.is_allowed && user?.is_admin) {
     menuItems.push('Admin')
     //   }
+
+    console.log('menuItem', menuItems[1])
     return (
         <HeaderContainer>
             <HeaderContent>
@@ -35,7 +40,10 @@ export default function Header() {
                     <LabTitle>Laboratório de Ensaios Mecânicos</LabTitle>
                 </LogoContainer>
                 <MenuContainer>
-                    <ProfileLink to="/perfil">
+                    <ProfileLink
+                        to="/perfil"
+                        $isCurrentPatch={location.pathname === '/perfil'}
+                    >
                         <FiUser size="28px" strokeWidth="3" />
                         <ProfileName>{'admin'}</ProfileName>
                     </ProfileLink>
@@ -44,14 +52,24 @@ export default function Header() {
                             {menuItems.map((menuItem) => (
                                 <MenuItem key={menuItem}>
                                     <MenuLink
-                                        to={`/${menuItem.replace(/ç/g, 'c').replace(/õ/g, 'o')}`}
+                                        to={`/${menuItem.replace(/ç/g, 'c').replace(/õ/g, 'o').toLowerCase()}`}
+                                        $isCurrentPatch={
+                                            menuItem === 'Estoque'
+                                                ? location.pathname === '/' ||
+                                                  location.pathname ===
+                                                      '/estoque'
+                                                : `/${menuItem.replace(/ç/g, 'c').replace(/õ/g, 'o').toLowerCase()}` ===
+                                                  location.pathname
+                                        }
                                     >
                                         {menuItem}
                                     </MenuLink>
                                 </MenuItem>
                             ))}
                             <MenuItem>
-                                <MenuLink to="/">Sair</MenuLink>
+                                <MenuLink to="/" $isCurrentPatch={false}>
+                                    Sair
+                                </MenuLink>
                             </MenuItem>
                         </MenuList>
                     </Nav>
