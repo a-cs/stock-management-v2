@@ -13,7 +13,7 @@ export const FormTitle = styled.div`
     margin: 0 0 2.25rem 0;
     display: inline-block;
     text-align: center;
-    font-size: 2rem;
+    font-size: 3rem;
     color: ${(props) => props.theme.lightGreen};
 `
 

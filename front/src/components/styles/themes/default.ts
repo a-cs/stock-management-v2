@@ -4,6 +4,7 @@ export const defaultTheme = {
     secundary: 'red',
     text: '#676767',
     red: '#cd3539',
+    black: '#000000',
     lightGreen: '#46a151ff',
     lighterGreen: '#46a151c5',
     darkGreen: '#0e402dff',
