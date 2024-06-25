@@ -6,17 +6,20 @@ import Categories from './pages/Categories'
 import Transactions from './pages/Transactions'
 import Profile from './pages/Profile'
 import Users from './pages/Users'
+import PrivateRouter from './components/PrivateRouter'
 
 export function Router() {
     return (
         <Routes>
-            <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path="/estoque" element={<Home />} />
-                <Route path="/categorias" element={<Categories />} />
-                <Route path="/movimentacoes" element={<Transactions />} />
-                <Route path="/perfil" element={<Profile />} />
-                <Route path="/admin" element={<Users />} />
+            <Route element={<PrivateRouter />}>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="/estoque" element={<Home />} />
+                    <Route path="/categorias" element={<Categories />} />
+                    <Route path="/movimentacoes" element={<Transactions />} />
+                    <Route path="/perfil" element={<Profile />} />
+                    <Route path="/admin" element={<Users />} />
+                </Route>
             </Route>
             <Route path="/login" element={<Login />} />
         </Routes>

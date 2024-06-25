@@ -16,20 +16,23 @@ import {
 import logoIFCE from '../../assets/logo_ifce_fortaleza.png'
 import { FiUser } from 'react-icons/fi'
 import { useLocation } from 'react-router-dom'
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/AuthContext'
 
 export default function Header() {
+    const { user, signOut } = useContext(AuthContext)
     const location = useLocation()
 
     const menuItems = []
-    // if (user?.is_allowed) {
-    menuItems.push('Estoque')
-    menuItems.push('Categorias')
-    menuItems.push('Movimentações')
-    //   }
+    if (user?.is_allowed) {
+        menuItems.push('Estoque')
+        menuItems.push('Categorias')
+        menuItems.push('Movimentações')
+    }
 
-    //   if (user?.is_allowed && user?.is_admin) {
-    menuItems.push('Admin')
-    //   }
+    if (user?.is_allowed && user?.is_admin) {
+        menuItems.push('Admin')
+    }
 
     return (
         <HeaderContainer>
@@ -44,7 +47,7 @@ export default function Header() {
                         $isCurrentPatch={location.pathname === '/perfil'}
                     >
                         <FiUser size="28px" strokeWidth="3" />
-                        <ProfileName>{'admin'}</ProfileName>
+                        <ProfileName>{user?.name || 'Usuário'}</ProfileName>
                     </ProfileLink>
                     <Nav>
                         <MenuList>
@@ -66,7 +69,11 @@ export default function Header() {
                                 </MenuItem>
                             ))}
                             <MenuItem>
-                                <MenuLink to="/" $isCurrentPatch={false}>
+                                <MenuLink
+                                    onClick={() => signOut()}
+                                    to="/"
+                                    $isCurrentPatch={false}
+                                >
                                     Sair
                                 </MenuLink>
                             </MenuItem>
