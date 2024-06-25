@@ -19,7 +19,7 @@ import { useLocation } from 'react-router-dom'
 
 export default function Header() {
     const location = useLocation()
-    console.log('location:', location)
+
     const menuItems = []
     // if (user?.is_allowed) {
     menuItems.push('Estoque')
@@ -31,7 +31,6 @@ export default function Header() {
     menuItems.push('Admin')
     //   }
 
-    console.log('menuItem', menuItems[1])
     return (
         <HeaderContainer>
             <HeaderContent>

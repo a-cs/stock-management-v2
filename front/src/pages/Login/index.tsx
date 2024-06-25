@@ -8,24 +8,27 @@ import {
     Label,
     LoginContainer,
 } from './styles'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { MdLogin } from 'react-icons/md'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../contexts/AuthContext'
 
 export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
 
+    const { signIn } = useContext(AuthContext)
+    const navigate = useNavigate()
+
     const handleSubmit = async (e: any) => {
         e.preventDefault()
         try {
-            //   await signIn({
-            // 	email,
-            // 	password,
-            //   });
-            //   history.push('/Estoque');
-            console.log(email, password)
+            await signIn({
+                email,
+                password,
+            })
+            navigate('/estoque')
         } catch (error: any) {
             setMessage(error.response.data.message)
         }
