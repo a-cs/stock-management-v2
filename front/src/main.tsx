@@ -10,6 +10,11 @@ link.href =
     'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap'
 document.head.appendChild(link)
 
+const iconLink = document.createElement('link')
+link.rel = 'icon'
+link.href = './public/ifce.svg'
+document.head.appendChild(iconLink)
+
 document.title = 'Estoque LEM - IFCE'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
