@@ -95,9 +95,9 @@ export const Table = styled.table`
         height: 2.25rem;
     }
 
-    @media (min-width: 700px) {
+    @media (min-width: 701px) {
         th {
-            padding: 0.8rem 0;
+            padding: 0.5rem 0;
         }
 
         tbody td {

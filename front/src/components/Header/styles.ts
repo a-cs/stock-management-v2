@@ -13,7 +13,7 @@ export const HeaderContent = styled.div`
     max-width: 1110px;
     height: 105px;
 
-    @media (min-width: 1000px) {
+    @media (min-width: 1110px) {
         width: 1110px;
     }
 `
