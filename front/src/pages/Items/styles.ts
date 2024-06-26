@@ -12,7 +12,7 @@ export const PageContent = styled.div`
 export const PageHeader = styled.div`
     display: flex;
     flex-direction: row;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 `
 
 export const PageTitle = styled.h2`
