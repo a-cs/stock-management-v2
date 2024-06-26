@@ -3,10 +3,6 @@ import { styled } from 'styled-components'
 
 export const HeaderContainer = styled.header`
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
     padding: 1.5rem 0;
     background-color: ${(props) => props.theme.lighterGray};
 `
@@ -23,7 +19,6 @@ export const HeaderContent = styled.div`
 `
 export const LogoContainer = styled.div`
     margin: auto 1rem;
-    height: 105px;
 `
 
 export const LogoImage = styled.img`
@@ -96,3 +91,41 @@ export const MenuList = styled.ul`
 `
 
 export const MenuItem = styled.li``
+
+export const MenuIconContainer = styled.div`
+    display: block;
+
+    @media (min-width: 1000px) {
+        display: none;
+    }
+`
+export const IconButton = styled.button`
+    position: absolute;
+    right: 1.875rem;
+    top: 50px;
+    cursor: pointer;
+    border: none;
+    background-color: ${(props) => props.theme.lighterGray};
+`
+
+export const MenuMobile = styled.div`
+    position: absolute;
+    z-index: 2;
+    background-color: ${(props) => props.theme.lighterGray};
+    right: 0;
+    top: 150px;
+    padding: 0.75rem 1rem;
+    border-radius: 0 0 0 12px;
+    height: 100%;
+    transition: 0.5s ease-in;
+
+    ul {
+        flex-direction: column;
+
+        li {
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+    }
+`
