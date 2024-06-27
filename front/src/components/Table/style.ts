@@ -108,6 +108,10 @@ export const Table = styled.table`
             border-bottom: none;
         }
 
+        tr:last-child td:first-child {
+            border-radius: 0 0 0 12px;
+        }
+
         tr:last-child td:last-child button {
             border-radius: 0 0 12px 0;
         }

@@ -29,13 +29,11 @@ export const ButtonContainer = styled.div`
     justify-content: flex-end;
 `
 
-export const Button = styled.button`
+const BaseButton = styled.button`
     background-color: ${(props) => props.theme.lightGreen};
     color: ${(props) => props.theme.whiteText};
-    border: 1px solid #e0e0e0;
     border-radius: 24px;
     padding: 0.5rem 1rem;
-    display: none;
     align-items: center;
     font-weight: 700;
     font-size: 1.5rem;
@@ -45,11 +43,33 @@ export const Button = styled.button`
     &:hover {
         background-color: ${(props) => props.theme.lighterGreen};
     }
+`
 
+export const ButtonDesktop = styled(BaseButton)`
+    border: 1px solid #e0e0e0;
+    display: none;
     @media (min-width: 1000px) {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         gap: 12px;
+    }
+`
+
+export const ButtonMobile = styled(BaseButton)`
+    border: none;
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+    padding: 1rem 1.25rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+    position: fixed;
+    z-index: 1;
+    bottom: 1rem;
+    right: 1rem;
+
+    @media (min-width: 1000px) {
+        display: none;
     }
 `

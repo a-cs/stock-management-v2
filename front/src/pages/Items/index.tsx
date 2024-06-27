@@ -1,10 +1,11 @@
 import { FiEdit, FiPlus } from 'react-icons/fi'
 import {
     ButtonContainer,
-    Button,
     PageContent,
     PageHeader,
     PageTitle,
+    ButtonDesktop,
+    ButtonMobile,
 } from './styles'
 import { useEffect, useState } from 'react'
 import api from '../../services/api'
@@ -47,10 +48,13 @@ export default function Items() {
             <PageHeader>
                 <PageTitle>Estoque</PageTitle>
                 <ButtonContainer>
-                    <Button>
+                    <ButtonDesktop>
                         <FiPlus />
                         Criar novo item
-                    </Button>
+                    </ButtonDesktop>
+                    <ButtonMobile>
+                        <FiPlus size="40px" />
+                    </ButtonMobile>
                 </ButtonContainer>
             </PageHeader>
             <Table>
