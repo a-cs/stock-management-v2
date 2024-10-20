@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model categories {
+  id         Int      @id(map: "PK_24dbc6126a28ff948da33e97d3b") @default(autoincrement())
+  name       String   @db.VarChar
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+  items      items[]
+}
+
+model items {
+  id                  Int            @id(map: "PK_ba5885359424c15ca6b9e79bcf6") @default(autoincrement())
+  name                String         @db.VarChar
+  unit                String         @db.VarChar
+  minimal_stock_alarm Decimal        @db.Decimal
+  total_stock         Decimal        @db.Decimal
+  created_at          DateTime       @default(now()) @db.Timestamp(6)
+  updated_at          DateTime       @default(now()) @db.Timestamp(6)
+  category_id         Int
+  categories          categories     @relation(fields: [category_id], references: [id], onDelete: SetNull, map: "ItemCategory")
+  transactions        transactions[]
+}
+
+model transactions {
+  id            Int      @id(map: "PK_a219afd8dd77ed80f5a862f1db9") @default(autoincrement())
+  item_quantity Decimal  @db.Decimal
+  type          String   @db.VarChar
+  created_at    DateTime @default(now()) @db.Timestamp(6)
+  updated_at    DateTime @default(now()) @db.Timestamp(6)
+  item_id       Int
+  items         items    @relation(fields: [item_id], references: [id], onDelete: SetNull, map: "TransactionItem")
+}
+
+model users {
+  id         Int      @id(map: "PK_a3ffb1c0c8416b9fc6f907b7433") @default(autoincrement())
+  name       String   @db.VarChar
+  email      String   @unique(map: "UQ_97672ac88f789774dd47f7c8be3") @db.VarChar
+  password   String   @db.VarChar
+  is_admin   Boolean
+  is_allowed Boolean
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @db.Timestamp(6)
+}
