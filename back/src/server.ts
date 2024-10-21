@@ -1,23 +1,15 @@
-import { PrismaClient } from '@prisma/client'
+import 'express-async-errors'
 import 'dotenv/config'
 import express from 'express'
+import routes from './routes'
+import errorHandler from './middlewares/errorHandler'
 
 const app = express()
 
 app.use(express.json())
+app.use(routes)
 
-const prisma = new PrismaClient()
-
-app.post('/users', (req, res) => {
-    console.log(req.body)
-    res.send('Ok')
-})
-
-app.get('/users', async (req, res) => {
-    const users = await prisma.users.findMany()
-    console.log(users)
-    res.send('Ok')
-})
+app.use(errorHandler as unknown as express.ErrorRequestHandler)
 
 app.listen(process.env.PORT || 3333, () => {
     console.log(`Server started on port ${process.env.PORT || 3333}!`)
