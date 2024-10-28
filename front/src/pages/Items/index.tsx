@@ -57,6 +57,7 @@ export default function Items() {
                     <ButtonContainer>
                         <Button
                             variant="accept"
+                            hideOnMobile={true}
                             icon={<FiPlus size={32} />}
                             onClick={() => setOpenItemModal(true)}
                         >

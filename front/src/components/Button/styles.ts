@@ -1,8 +1,14 @@
 import styled from 'styled-components'
 
-export const StyledButton = styled.button<{ $variant: 'accept' | 'refuse' }>`
+export const StyledButton = styled.button<{
+    $variant: 'accept' | 'refuse'
+    $hideOnMobile: boolean
+}>`
     width: 300px;
-    display: flex;
+    display: ${(props) => (props.$hideOnMobile ? 'none' : 'flex')};
+    @media (min-width: 1000px) {
+        display: flex;
+    }
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem 1rem;
