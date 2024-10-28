@@ -45,17 +45,6 @@ const BaseButton = styled.button`
     }
 `
 
-export const ButtonDesktop = styled(BaseButton)`
-    border: 1px solid #e0e0e0;
-    display: none;
-    @media (min-width: 1000px) {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 12px;
-    }
-`
-
 export const ButtonMobile = styled(BaseButton)`
     border: none;
     display: flex;

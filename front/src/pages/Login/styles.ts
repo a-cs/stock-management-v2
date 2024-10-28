@@ -88,8 +88,8 @@ export const Button = styled.button`
     width: 100%;
     max-width: 350px;
     font-weight: 700;
-    padding: 0.8rem 1.6rem;
-    margin-bottom: 1.2rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.75rem;
     transition: 0.2s;
 
     &:hover {

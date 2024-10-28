@@ -4,13 +4,13 @@ import {
     PageContent,
     PageHeader,
     PageTitle,
-    ButtonDesktop,
     ButtonMobile,
 } from './styles'
 import { useEffect, useState } from 'react'
 import api from '../../services/api'
 import { Table } from '../../components/Table/style'
-import ModalWithCloseOutside from '../../components/Modals/ModalWithCloseOutside'
+import ModalCreateItem from '../../components/Modals/ModalCreateItem'
+import Button from '../../components/Button'
 
 interface iCategory {
     id: string
@@ -47,20 +47,21 @@ export default function Items() {
     }, [])
     return (
         <>
-            <ModalWithCloseOutside
+            <ModalCreateItem
                 isOpen={openItemModal}
                 setIsOpen={setOpenItemModal}
-            >
-                <b>teste</b>
-            </ModalWithCloseOutside>
+            />
             <PageContent>
                 <PageHeader>
                     <PageTitle>Estoque</PageTitle>
                     <ButtonContainer>
-                        <ButtonDesktop onClick={() => setOpenItemModal(true)}>
-                            <FiPlus />
-                            Criar novo item
-                        </ButtonDesktop>
+                        <Button
+                            variant="accept"
+                            icon={<FiPlus size={32} />}
+                            onClick={() => setOpenItemModal(true)}
+                        >
+                            Criar item
+                        </Button>
                         <ButtonMobile onClick={() => setOpenItemModal(true)}>
                             <FiPlus size="40px" />
                         </ButtonMobile>

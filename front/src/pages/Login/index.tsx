@@ -1,5 +1,4 @@
 import {
-    Button,
     Form,
     FormContainer,
     FormTitle,
@@ -12,6 +11,7 @@ import { useContext, useState } from 'react'
 import { MdLogin } from 'react-icons/md'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
+import Button from '../../components/Button'
 
 export default function Login() {
     const [email, setEmail] = useState('')
@@ -64,10 +64,12 @@ export default function Login() {
                         <InputTitle $isInputEmpty={!password}>Senha</InputTitle>
                     </Label>
                     <h4>{message}</h4>
-                    <Button type="submit" id="loginBtn">
-                        <MdLogin size={32} /> <div className="space" />
-                        <div>Fazer login</div>
-                        <div className="space" />
+                    <Button
+                        variant="accept"
+                        type="submit"
+                        icon={<MdLogin size={32} />}
+                    >
+                        Login
                     </Button>
                     <Link to="/Criar-conta">Criar uma nova conta</Link>
                 </Form>
