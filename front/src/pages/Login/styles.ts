@@ -23,7 +23,7 @@ export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 2rem;
-    border: 2px solid ${(props) => props.theme.lighterGreen};
+    border: 2px solid ${(props) => props.theme.green};
     border-radius: 16px;
 `
 
@@ -35,13 +35,13 @@ export const Form = styled.form`
     align-items: center;
     font-size: 1rem;
     text-align: center;
+    gap: 2.25rem;
 `
 export const Label = styled.label`
     width: 100%;
     max-width: 350px;
     position: relative;
     display: inline-block;
-    margin-bottom: 2.25rem;
 `
 
 export const Input = styled.input`
@@ -51,13 +51,13 @@ export const Input = styled.input`
     font-size: 1.5rem;
     height: 2.25rem;
     display: inline-block;
-    border: 2px solid ${(props) => props.theme.lightGray};
+    border: 2px solid ${(props) => props.theme.lighterGreen};
     border-radius: 16px;
     box-shadow: none;
 
     &:focus-visible {
         outline: none;
-        border-color: ${(props) => props.theme.darkBlue};
+        border-color: ${(props) => props.theme.darkGray};
     }
 `
 
@@ -93,7 +93,7 @@ export const Button = styled.button`
     transition: 0.2s;
 
     &:hover {
-        background-color: ${(props) => props.theme.lighterGreen};
-        border-color: ${(props) => props.theme.lighterGreen};
+        background-color: ${(props) => props.theme.green};
+        border-color: ${(props) => props.theme.green};
     }
 `

@@ -41,7 +41,7 @@ const BaseButton = styled.button`
     transition: 0.2s;
 
     &:hover {
-        background-color: ${(props) => props.theme.lighterGreen};
+        background-color: ${(props) => props.theme.green};
     }
 `
 

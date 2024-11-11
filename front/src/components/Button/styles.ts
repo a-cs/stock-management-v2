@@ -27,7 +27,7 @@ export const StyledButton = styled.button<{
     &:hover {
         background-color: ${(props) =>
             props.$variant === 'accept'
-                ? props.theme.lighterGreen
+                ? props.theme.green
                 : props.theme.red};
         color: ${(props) => props.theme.whiteText};
     }

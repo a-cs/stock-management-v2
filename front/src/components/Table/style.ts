@@ -44,7 +44,7 @@ export const Table = styled.table`
         font-weight: 500;
         font-size: 1rem;
         text-align: center;
-        border-bottom: 1px solid ${(props) => props.theme.lightGray};
+        border-bottom: 1px solid ${(props) => props.theme.lighterGreen};
         color: ${(props) => props.theme.text};
     }
 
@@ -57,7 +57,7 @@ export const Table = styled.table`
         cursor: pointer;
 
         &:hover {
-            background-color: ${(props) => props.theme.lighterGreen};
+            background-color: ${(props) => props.theme.green};
             transition: 0.2s;
             svg {
                 color: ${(props) => props.theme.whiteText};

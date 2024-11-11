@@ -26,7 +26,7 @@ export const ModalContent = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    border: 4px solid ${(props) => props.theme.lighterGreen};
+    border: 4px solid ${(props) => props.theme.green};
     border-radius: 16px;
     box-shadow: 4px 4px 12px 6px #8d8d8d;
 `
