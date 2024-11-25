@@ -7,14 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model categories {
-  id         Int      @id(map: "PK_24dbc6126a28ff948da33e97d3b") @default(autoincrement())
-  name       String   @db.VarChar
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  updated_at DateTime @default(now()) @db.Timestamp(6)
-  items      items[]
-}
-
 model items {
   id                  Int            @id(map: "PK_ba5885359424c15ca6b9e79bcf6") @default(autoincrement())
   name                String         @db.VarChar
@@ -24,7 +16,8 @@ model items {
   created_at          DateTime       @default(now()) @db.Timestamp(6)
   updated_at          DateTime       @default(now()) @db.Timestamp(6)
   category_id         Int
-  categories          categories     @relation(fields: [category_id], references: [id], onDelete: SetNull, map: "ItemCategory")
+  unit_id             Int?
+  units               units?         @relation(fields: [unit_id], references: [id], onUpdate: NoAction, map: "ItemUnit")
   transactions        transactions[]
 }
 
@@ -35,16 +28,27 @@ model transactions {
   created_at    DateTime @default(now()) @db.Timestamp(6)
   updated_at    DateTime @default(now()) @db.Timestamp(6)
   item_id       Int
+  user_id       Int
   items         items    @relation(fields: [item_id], references: [id], onDelete: SetNull, map: "TransactionItem")
+  users         users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "TransactionUser")
 }
 
 model users {
-  id         Int      @id(map: "PK_a3ffb1c0c8416b9fc6f907b7433") @default(autoincrement())
-  name       String   @db.VarChar
-  email      String   @unique(map: "UQ_97672ac88f789774dd47f7c8be3") @db.VarChar
-  password   String   @db.VarChar
-  is_admin   Boolean
-  is_allowed Boolean
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  updated_at DateTime @default(now()) @db.Timestamp(6)
+  id           Int            @id(map: "PK_a3ffb1c0c8416b9fc6f907b7433") @default(autoincrement())
+  name         String         @db.VarChar
+  email        String         @unique(map: "UQ_97672ac88f789774dd47f7c8be3") @db.VarChar
+  password     String         @db.VarChar
+  is_admin     Boolean
+  is_allowed   Boolean
+  created_at   DateTime       @default(now()) @db.Timestamp(6)
+  updated_at   DateTime       @default(now()) @db.Timestamp(6)
+  transactions transactions[]
+}
+
+model units {
+  id         Int       @id @default(autoincrement())
+  symbol     String    @db.VarChar(10)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+  items      items[]
 }
