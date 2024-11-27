@@ -1,12 +1,15 @@
 import { Router } from 'express'
 import UnitController from '../controllers/UnitController'
+import ensureUserIsAuthenticated from '../middlewares/ensureUserIsAuthenticated'
 
-const categoriesRouter = Router()
+const unitsRouter = Router()
+unitsRouter.use(ensureUserIsAuthenticated)
+
 const unitController = new UnitController()
 
-categoriesRouter.get('/', unitController.getAllUnits)
-categoriesRouter.post('/', unitController.createUnit)
-categoriesRouter.patch('/:id', unitController.updateUnit)
-categoriesRouter.delete('/:id', unitController.deleteUnit)
+unitsRouter.get('/', unitController.getAllUnits)
+unitsRouter.post('/', unitController.createUnit)
+unitsRouter.patch('/:id', unitController.updateUnit)
+unitsRouter.delete('/:id', unitController.deleteUnit)
 
-export default categoriesRouter
+export default unitsRouter
