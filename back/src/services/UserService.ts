@@ -11,7 +11,7 @@ interface iCreateUserRequest {
 export default class UserService {
     private prisma = new PrismaClient()
     public async getAllUsers() {
-        return await this.prisma.users.findMany()
+        return await this.prisma.users.findMany({ orderBy: [{ name: 'asc' }] })
     }
 
     public async createUser({ name, email, password }: iCreateUserRequest) {

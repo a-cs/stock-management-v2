@@ -9,8 +9,8 @@ export default class UnitController {
     }
 
     public getAllUnits = async (req: Request, res: Response) => {
-        const categories = await this.unitService.getAllUnits()
-        res.status(200).json(categories)
+        const units = await this.unitService.getAllUnits()
+        res.status(200).json(units)
     }
 
     public createUnit = async (req: Request, res: Response) => {
@@ -32,12 +32,12 @@ export default class UnitController {
         res.status(200).json(updatedunit)
     }
 
-    public deleteUnit = async (req: Request, res: Response) => {
-        const { id } = req.params
+    // public deleteUnit = async (req: Request, res: Response) => {
+    //     const { id } = req.params
 
-        await this.unitService.deleteUnit({
-            id,
-        })
-        res.status(204).send()
-    }
+    //     await this.unitService.deleteUnit({
+    //         id,
+    //     })
+    //     res.status(204).send()
+    // }
 }

@@ -10,14 +10,16 @@ interface iUpdateUnitRequest {
     symbol: string
 }
 
-interface iDeleteUnitRequest {
-    id: string
-}
+// interface iDeleteUnitRequest {
+//     id: string
+// }
 
 export default class UnitService {
     private prisma = new PrismaClient()
     public async getAllUnits() {
-        return await this.prisma.units.findMany({ orderBy: [{ id: 'asc' }] })
+        return await this.prisma.units.findMany({
+            orderBy: [{ symbol: 'asc' }],
+        })
     }
 
     public async createUnit({ symbol }: iCreateUnitRequest) {
@@ -25,7 +27,7 @@ export default class UnitService {
             where: { symbol },
         })
         if (checkUnitExists) {
-            throw new AppError('Unit name already in use')
+            throw new AppError('O nome da unidade já está em uso.')
         }
         const Unit = this.prisma.units.create({
             data: {
@@ -40,13 +42,13 @@ export default class UnitService {
             where: { id: Number(id) },
         })
         if (!checkUnitIdExists) {
-            throw new AppError('Unit id not found')
+            throw new AppError('Id da unidade não encontrado')
         }
         const checkUnitNameExists = await this.prisma.units.findFirst({
             where: { symbol },
         })
         if (checkUnitNameExists) {
-            throw new AppError('Unit name already in use')
+            throw new AppError('O nome da unidade já está em uso.')
         }
         const Unit = this.prisma.units.update({
             where: {
@@ -59,18 +61,18 @@ export default class UnitService {
         return Unit
     }
 
-    public async deleteUnit({ id }: iDeleteUnitRequest) {
-        const checkUnitIdExists = await this.prisma.units.findFirst({
-            where: { id: Number(id) },
-        })
-        if (!checkUnitIdExists) {
-            throw new AppError('Unit id not found')
-        }
-        const Unit = this.prisma.units.delete({
-            where: {
-                id: Number(id),
-            },
-        })
-        return Unit
-    }
+    // public async deleteUnit({ id }: iDeleteUnitRequest) {
+    //     const checkUnitIdExists = await this.prisma.units.findFirst({
+    //         where: { id: Number(id) },
+    //     })
+    //     if (!checkUnitIdExists) {
+    //         throw new AppError('Id da unidade não encontrado')
+    //     }
+    //     const Unit = this.prisma.units.delete({
+    //         where: {
+    //             id: Number(id),
+    //         },
+    //     })
+    //     return Unit
+    // }
 }

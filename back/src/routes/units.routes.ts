@@ -10,6 +10,6 @@ const unitController = new UnitController()
 unitsRouter.get('/', unitController.getAllUnits)
 unitsRouter.post('/', unitController.createUnit)
 unitsRouter.patch('/:id', unitController.updateUnit)
-unitsRouter.delete('/:id', unitController.deleteUnit)
+// unitsRouter.delete('/:id', unitController.deleteUnit)
 
 export default unitsRouter
