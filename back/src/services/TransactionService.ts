@@ -8,6 +8,25 @@ export default class TransactionService {
 
     public async getAllTransactions() {
         return await this.prisma.transactions.findMany({
+            include: {
+                users: {
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
+                items: {
+                    select: {
+                        id: true,
+                        name: true,
+                        units: {
+                            select: {
+                                symbol: true,
+                            },
+                        },
+                    },
+                },
+            },
             orderBy: [{ created_at: 'desc' }],
         })
     }
