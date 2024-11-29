@@ -29,7 +29,7 @@ export default class UnitService {
         if (checkUnitExists) {
             throw new AppError('O nome da unidade já está em uso.')
         }
-        const Unit = this.prisma.units.create({
+        const Unit = await this.prisma.units.create({
             data: {
                 symbol,
             },
@@ -50,7 +50,7 @@ export default class UnitService {
         if (checkUnitNameExists) {
             throw new AppError('O nome da unidade já está em uso.')
         }
-        const Unit = this.prisma.units.update({
+        const Unit = await this.prisma.units.update({
             where: {
                 id: Number(id),
             },
@@ -68,7 +68,7 @@ export default class UnitService {
     //     if (!checkUnitIdExists) {
     //         throw new AppError('Id da unidade não encontrado')
     //     }
-    //     const Unit = this.prisma.units.delete({
+    //     const Unit = await this.prisma.units.delete({
     //         where: {
     //             id: Number(id),
     //         },

@@ -22,7 +22,7 @@ export default class UserService {
             throw new AppError('Email adress already in use')
         }
         const hashedPassword = await hash(password, 8)
-        const user = this.prisma.users.create({
+        const user = await this.prisma.users.create({
             data: {
                 name,
                 email,

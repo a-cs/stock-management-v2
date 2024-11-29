@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 import { PrismaClient } from '@prisma/client'
-import { CreateItemRequest } from '../schemas/CreateItemSchema'
+import { CreateItemRequest } from '../schemas/items/CreateItemSchema'
 import AppError from '../errors/AppError'
-import { UpdateItemRequest } from '../schemas/UpdateItemSchema'
+import { UpdateItemRequest } from '../schemas/items/UpdateItemSchema'
 
 export default class ItemService {
     private prisma = new PrismaClient()
@@ -29,7 +29,7 @@ export default class ItemService {
         if (!checkUnitIdExists) {
             throw new AppError('Unidade não encontrada')
         }
-        const Unit = this.prisma.items.create({
+        const createdItem = await this.prisma.items.create({
             data: {
                 name,
                 minimal_stock_alarm,
@@ -37,7 +37,7 @@ export default class ItemService {
                 unit_id,
             },
         })
-        return Unit
+        return createdItem
     }
 
     public async updateItem({
@@ -58,7 +58,7 @@ export default class ItemService {
         if (!checkItemIdExists) {
             throw new AppError('Unidade não encontrada')
         }
-        const Unit = this.prisma.items.update({
+        const updatedItem = await this.prisma.items.update({
             where: {
                 id: Number(id),
             },
@@ -68,6 +68,6 @@ export default class ItemService {
                 unit_id,
             },
         })
-        return Unit
+        return updatedItem
     }
 }

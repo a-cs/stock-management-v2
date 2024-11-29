@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 import ItemService from '../services/ItemService'
-import { CreateItemSchema } from '../schemas/CreateItemSchema'
+import { CreateItemSchema } from '../schemas/items/CreateItemSchema'
 import { ZodError } from 'zod'
 import AppError from '../errors/AppError'
-import { UpdateItemSchema } from '../schemas/UpdateItemSchema'
+import { UpdateItemSchema } from '../schemas/items/UpdateItemSchema'
 
 export default class ItemController {
     private itemService: ItemService
