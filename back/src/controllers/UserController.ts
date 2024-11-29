@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import UserService from '../services/UserService'
+import createUserDTO from '../DTOs/userDTO'
 
 export default class UserController {
     private userService: UserService
@@ -10,7 +11,8 @@ export default class UserController {
 
     public getAllUsers = async (req: Request, res: Response) => {
         const users = await this.userService.getAllUsers()
-        res.status(200).json(users)
+
+        res.status(200).json(users.map(createUserDTO))
     }
 
     public createUser = async (req: Request, res: Response) => {

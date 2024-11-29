@@ -62,3 +62,8 @@ export const ButtonMobile = styled(BaseButton)`
         display: none;
     }
 `
+
+export const IconContainer = styled.div<{ $isGreen: boolean }>`
+    color: ${(props) =>
+        props.$isGreen ? props.theme.lightGreen : props.theme.red};
+`
