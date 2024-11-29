@@ -27,7 +27,7 @@ export default class UnitService {
             where: { symbol },
         })
         if (checkUnitExists) {
-            throw new AppError('O nome da unidade já está em uso.')
+            throw new AppError(`A unidade "${symbol}" já existe.`)
         }
         const Unit = await this.prisma.units.create({
             data: {
@@ -48,7 +48,7 @@ export default class UnitService {
             where: { symbol },
         })
         if (checkUnitNameExists) {
-            throw new AppError('O nome da unidade já está em uso.')
+            throw new AppError(`A unidade "${symbol}" já existe.`)
         }
         const Unit = await this.prisma.units.update({
             where: {

@@ -1,6 +1,6 @@
 import { FiCheck, FiX } from 'react-icons/fi'
 import ModalWithCloseOutside from '../ModalWithCloseOutside'
-import { ModalFooter, ModalTitle } from '../ModalWithCloseOutside/styles'
+import { ModalFooter } from '../ModalWithCloseOutside/styles'
 import Button from '../../Button'
 import { FormTitle, Form } from '../../Form/styles'
 import Input from '../../Input'
@@ -70,7 +70,6 @@ export default function ModalCreateItem({
     }, [isOpen, setIsOpen])
     return (
         <ModalWithCloseOutside isOpen={isOpen} setIsOpen={setIsOpen}>
-            <ModalTitle></ModalTitle>
             <FormTitle>
                 <h4>Criar novo item</h4>
             </FormTitle>

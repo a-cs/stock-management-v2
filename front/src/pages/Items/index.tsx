@@ -5,7 +5,7 @@ import {
     PageHeader,
     PageTitle,
     ButtonMobile,
-} from './styles'
+} from '../defaultStyles/styles'
 import { useEffect, useState } from 'react'
 import api from '../../services/api'
 import { Table } from '../../components/Table/style'
