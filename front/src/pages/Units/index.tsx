@@ -30,7 +30,7 @@ export default function Units() {
         setLoading(true)
         api.get('/units')
             .then((response) => {
-                // setErrorMsg('')
+                setErrorMsg('')
                 setLoading(false)
                 setUnits(response.data)
             })
@@ -39,7 +39,7 @@ export default function Units() {
                 error.message = 'Não foi possivel carregar os dados da tabela.'
                 ErrorHandler(error)
                 setLoading(false)
-                setErrorMsg('Não foi possivel carregar os dados da tabela.')
+                setErrorMsg(error.message)
             })
     }
 

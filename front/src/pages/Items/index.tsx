@@ -38,7 +38,7 @@ export default function Items() {
         setLoading(true)
         api.get('/items')
             .then((response) => {
-                // setErrorMsg('')
+                setErrorMsg('')
                 setLoading(false)
                 setItems(response.data)
             })
@@ -47,7 +47,7 @@ export default function Items() {
                 error.message = 'Não foi possivel carregar os dados da tabela.'
                 ErrorHandler(error)
                 setLoading(false)
-                setErrorMsg('Não foi possivel carregar os dados da tabela.')
+                setErrorMsg(error.message)
             })
     }
 
