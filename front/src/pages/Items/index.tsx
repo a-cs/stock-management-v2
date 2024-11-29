@@ -11,6 +11,7 @@ import api from '../../services/api'
 import { Table } from '../../components/Table/style'
 import ModalCreateItem from '../../components/Modals/ModalCreateItem'
 import Button from '../../components/Button'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 interface iUnit {
     id: number
@@ -53,7 +54,7 @@ export default function Items() {
             <ModalCreateItem
                 isOpen={openItemModal}
                 setIsOpen={setOpenItemModal}
-				updateItems={getItems}
+                updateItems={getItems}
             />
             <PageContent>
                 <PageHeader>
@@ -72,66 +73,74 @@ export default function Items() {
                         </ButtonMobile>
                     </ButtonContainer>
                 </PageHeader>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Nome</th>
-                            <th>Estoque mínimo</th>
-                            <th>Estoque total</th>
-                            <th>Unidade</th>
-                            <th>Editar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {items.map((item: iItem) => (
-                            <tr
-                                key={item.id}
-                                className={
-                                    Number(item.total_stock) <
-                                    Number(item.minimal_stock_alarm)
-                                        ? 'LowStock'
-                                        : ''
-                                }
-                            >
-                                <td data-label="Id">
-                                    {Number(item.id).toLocaleString('pt-BR')}
-                                </td>
-                                <td data-label="Nome">{item.name}</td>
-
-                                <td data-label="Estoque mínimo">
-                                    {Number(
-                                        item.minimal_stock_alarm,
-                                    ).toLocaleString('pt-BR', {
-                                        minimumFractionDigits: 3,
-                                    })}
-                                </td>
-                                <td data-label="Estoque total">
-                                    {Number(item.total_stock).toLocaleString(
-                                        'pt-BR',
-                                        {
-                                            minimumFractionDigits: 3,
-                                        },
-                                    )}
-                                </td>
-                                <td data-label="Unidade">
-                                    {item.units.symbol}
-                                </td>
-                                <td data-label="Editar">
-                                    <button
-                                        type="button"
-                                        // onClick={() => {
-                                        // 	setEditItemId(item.id)
-                                        // 	toggleEditItemModal()
-                                        // }}
-                                    >
-                                        <FiEdit size="20px" strokeWidth="2" />
-                                    </button>
-                                </td>
+                {loading ? (
+                    <LoadingSpinner />
+                ) : (
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nome</th>
+                                <th>Estoque mínimo</th>
+                                <th>Estoque total</th>
+                                <th>Unidade</th>
+                                <th>Editar</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {items.map((item: iItem) => (
+                                <tr
+                                    key={item.id}
+                                    className={
+                                        Number(item.total_stock) <
+                                        Number(item.minimal_stock_alarm)
+                                            ? 'LowStock'
+                                            : ''
+                                    }
+                                >
+                                    <td data-label="Id">
+                                        {Number(item.id).toLocaleString(
+                                            'pt-BR',
+                                        )}
+                                    </td>
+                                    <td data-label="Nome">{item.name}</td>
+
+                                    <td data-label="Estoque mínimo">
+                                        {Number(
+                                            item.minimal_stock_alarm,
+                                        ).toLocaleString('pt-BR', {
+                                            minimumFractionDigits: 3,
+                                        })}
+                                    </td>
+                                    <td data-label="Estoque total">
+                                        {Number(
+                                            item.total_stock,
+                                        ).toLocaleString('pt-BR', {
+                                            minimumFractionDigits: 3,
+                                        })}
+                                    </td>
+                                    <td data-label="Unidade">
+                                        {item.units.symbol}
+                                    </td>
+                                    <td data-label="Editar">
+                                        <button
+                                            type="button"
+                                            // onClick={() => {
+                                            // 	setEditItemId(item.id)
+                                            // 	toggleEditItemModal()
+                                            // }}
+                                        >
+                                            <FiEdit
+                                                size="20px"
+                                                strokeWidth="2"
+                                            />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                )}
             </PageContent>
         </>
     )

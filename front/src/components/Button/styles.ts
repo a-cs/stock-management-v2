@@ -4,7 +4,7 @@ export const StyledButton = styled.button<{
     $variant: 'accept' | 'refuse'
     $hideOnMobile: boolean
 }>`
-    width: 300px;
+    width: 260px;
     display: ${(props) => (props.$hideOnMobile ? 'none' : 'flex')};
     @media (min-width: 1000px) {
         display: flex;

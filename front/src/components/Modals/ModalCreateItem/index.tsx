@@ -9,6 +9,7 @@ import api from '../../../services/api'
 import Select from '../../Select'
 import { toast } from 'react-toastify'
 import { ErrorHandler } from '../../../helpers/ErrorHandler'
+import LoadingSpinner from '../../LoadingSpinner'
 
 interface iModalCreateItemProps {
     isOpen: boolean
@@ -30,7 +31,7 @@ export default function ModalCreateItem({
     const [unitId, setUnitId] = useState('')
     const [units, setUnits] = useState<iUnit[]>([])
     const [errorMsg, setErrorMsg] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -48,6 +49,7 @@ export default function ModalCreateItem({
 
     useEffect(() => {
         if (isOpen) {
+            setLoading(true)
             api.get('/units')
                 .then((response) => {
                     setUnits(response.data)
@@ -69,26 +71,36 @@ export default function ModalCreateItem({
                 <h4>Criar novo item</h4>
             </FormTitle>
             <Form onSubmit={handleSubmit}>
-                <Input label="Name" value={name} setValue={setName} />
-                <Select label="Unidade" value={unitId} setValue={setUnitId}>
-                    {units.map((unit: iUnit) => (
-                        <option value={unit.id} key={unit.id}>
-                            {unit.symbol}
-                        </option>
-                    ))}
-                </Select>
-                <ModalFooter>
-                    <Button
-                        type="submit"
-                        variant="accept"
-                        icon={<FiCheck size={32} />}
-                    >
-                        Confirmar
-                    </Button>
-                    <Button variant="refuse" icon={<FiX size={32} />}>
-                        Cancelar
-                    </Button>
-                </ModalFooter>
+                {loading ? (
+                    <LoadingSpinner />
+                ) : (
+                    <>
+                        <Input label="Name" value={name} setValue={setName} />
+                        <Select
+                            label="Unidade"
+                            value={unitId}
+                            setValue={setUnitId}
+                        >
+                            {units.map((unit: iUnit) => (
+                                <option value={unit.id} key={unit.id}>
+                                    {unit.symbol}
+                                </option>
+                            ))}
+                        </Select>
+                        <ModalFooter>
+                            <Button
+                                type="submit"
+                                variant="accept"
+                                icon={<FiCheck size={32} />}
+                            >
+                                Confirmar
+                            </Button>
+                            <Button variant="refuse" icon={<FiX size={32} />}>
+                                Cancelar
+                            </Button>
+                        </ModalFooter>
+                    </>
+                )}
             </Form>
         </ModalWithCloseOutside>
     )
