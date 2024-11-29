@@ -7,6 +7,8 @@ import Input from '../../Input'
 import { FormEvent, useEffect, useState } from 'react'
 import api from '../../../services/api'
 import Select from '../../Select'
+import { toast } from 'react-toastify'
+import { ErrorHandler } from '../../../helpers/ErrorHandler'
 
 interface iModalCreateItemProps {
     isOpen: boolean
@@ -36,23 +38,29 @@ export default function ModalCreateItem({
         try {
             await api.post('/items', { name, unit_id: Number(unitId) })
             updateItems()
+            toast.success('O item foi criado com sucesso.')
             setIsOpen(false)
         } catch (error) {
             console.log('error:', error)
+            ErrorHandler(error)
         }
     }
 
     useEffect(() => {
-        api.get('/units')
-            .then((response) => {
-                setUnits(response.data)
-                setUnitId(response.data[0].id)
-                setLoading(false)
-            })
-            .catch(() => {
-                setErrorMsg(true)
-                setLoading(false)
-            })
+        if (isOpen) {
+            api.get('/units')
+                .then((response) => {
+                    setUnits(response.data)
+                    setUnitId(response.data[0].id)
+                    setLoading(false)
+                })
+                .catch((error) => {
+                    console.log('error:', error)
+                    ErrorHandler(error)
+                    setErrorMsg(true)
+                    setLoading(false)
+                })
+        }
     }, [isOpen])
     return (
         <ModalWithCloseOutside isOpen={isOpen} setIsOpen={setIsOpen}>

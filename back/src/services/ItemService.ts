@@ -26,12 +26,13 @@ export default class ItemService {
     public async createItem({ name, unit_id }: CreateItemRequest) {
         const minimal_stock_alarm = this.initialStockValue
         const total_stock = this.initialStockValue
+        name = name.toLowerCase()
 
         const checkItemNameExists = await this.prisma.items.findFirst({
             where: { name },
         })
         if (checkItemNameExists) {
-            throw new AppError('O nome do item já está em uso.')
+            throw new AppError(`O nome "${name}" já está em uso.`)
         }
         const checkUnitIdExists = await this.prisma.units.findFirst({
             where: { id: Number(unit_id) },
@@ -56,11 +57,12 @@ export default class ItemService {
         unit_id,
         minimal_stock_alarm,
     }: UpdateItemRequest) {
+        name = name.toLowerCase()
         const checkItemNameExists = await this.prisma.items.findFirst({
             where: { name },
         })
         if (checkItemNameExists) {
-            throw new AppError('O nome do item já está em uso.')
+            throw new AppError(`O nome "${name}" já está em uso.`)
         }
         const checkItemIdExists = await this.prisma.units.findFirst({
             where: { id: Number(unit_id) },
