@@ -1,10 +1,11 @@
-import { Form, FormContainer, FormTitle, LoginContainer } from './styles'
+import { LoginContainer } from './styles'
 import { useContext, useState } from 'react'
 import { MdLogin } from 'react-icons/md'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
+import { FormContainer, FormTitle, Form } from '../../components/Form/styles'
 
 export default function Login() {
     const [email, setEmail] = useState('')

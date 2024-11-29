@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef } from 'react'
-import { ModalContainer, ModalContent } from './style'
+import { ModalContainer, ModalContent } from './styles'
 
 interface iModalWithCloseOutsideProps {
     isOpen: boolean

@@ -1,13 +1,6 @@
 import styled from 'styled-components'
 
-export const Label = styled.label`
-    width: 100%;
-    max-width: 350px;
-    position: relative;
-    display: inline-block;
-`
-
-export const StyledInput = styled.input`
+export const StyledSelect = styled.select`
     width: 100%;
     padding: 0rem 0.75rem;
     font-weight: 400;
@@ -24,7 +17,7 @@ export const StyledInput = styled.input`
     }
 `
 
-export const InputTitle = styled.span<{ $isInputEmpty: boolean }>`
+export const SelectTitle = styled.span<{ $isInputEmpty: boolean }>`
     position: absolute;
     font-weight: ${(props) => (props.$isInputEmpty ? 400 : 700)};
     font-size: ${(props) => (props.$isInputEmpty ? '1.5rem' : '1.25rem')};

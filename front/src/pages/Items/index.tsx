@@ -31,7 +31,7 @@ export default function Items() {
     const [loading, setLoading] = useState(false)
     const [openItemModal, setOpenItemModal] = useState(false)
 
-    useEffect(() => {
+    async function getItems() {
         setLoading(true)
         api.get('/items')
             .then((response) => {
@@ -43,12 +43,17 @@ export default function Items() {
                 setLoading(false)
                 setErrorMsg(true)
             })
+    }
+
+    useEffect(() => {
+        getItems()
     }, [])
     return (
         <>
             <ModalCreateItem
                 isOpen={openItemModal}
                 setIsOpen={setOpenItemModal}
+				updateItems={getItems}
             />
             <PageContent>
                 <PageHeader>
