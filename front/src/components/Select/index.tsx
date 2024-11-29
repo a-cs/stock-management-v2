@@ -5,7 +5,7 @@ import { SelectTitle, StyledSelect } from './styles'
 interface iInputProps {
     label: string
     value: string
-    setValue: (value: string) => void
+    setValue: (value: any) => void
     children: ReactNode
 }
 

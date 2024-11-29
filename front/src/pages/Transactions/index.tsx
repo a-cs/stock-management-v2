@@ -9,11 +9,11 @@ import {
 import { useEffect, useState } from 'react'
 import api from '../../services/api'
 import { Table } from '../../components/Table/style'
-import ModalCreateItem from '../../components/Modals/ModalCreateItem'
 import Button from '../../components/Button'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import { ErrorHandler } from '../../helpers/ErrorHandler'
 import ErrorMessage from '../../components/ErrorMessage'
+import ModalModalCreateTransaction from '../../components/Modals/ModalCreateTransaction'
 
 interface iUnit {
     symbol: string
@@ -41,7 +41,8 @@ export default function Transactions() {
     const [transactions, setTransactions] = useState<iTransaction[]>([])
     const [errorMsg, setErrorMsg] = useState('')
     const [loading, setLoading] = useState(false)
-    const [openItemModal, setOpenItemModal] = useState(false)
+    const [openCreateTransactionModal, setOpenCreateTransactionModal] =
+        useState(false)
 
     async function getTransactions() {
         setLoading(true)
@@ -65,10 +66,10 @@ export default function Transactions() {
     }, [])
     return (
         <>
-            <ModalCreateItem
-                isOpen={openItemModal}
-                setIsOpen={setOpenItemModal}
-                updateItems={getTransactions}
+            <ModalModalCreateTransaction
+                isOpen={openCreateTransactionModal}
+                setIsOpen={setOpenCreateTransactionModal}
+                updateTransactions={getTransactions}
             />
             <PageContent>
                 <PageHeader>
@@ -78,11 +79,13 @@ export default function Transactions() {
                             variant="accept"
                             hideOnMobile={true}
                             icon={<FiPlus size={32} />}
-                            onClick={() => setOpenItemModal(true)}
+                            onClick={() => setOpenCreateTransactionModal(true)}
                         >
                             Criar movimentação
                         </Button>
-                        <ButtonMobile onClick={() => setOpenItemModal(true)}>
+                        <ButtonMobile
+                            onClick={() => setOpenCreateTransactionModal(true)}
+                        >
                             <FiPlus size="40px" />
                         </ButtonMobile>
                     </ButtonContainer>
