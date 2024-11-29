@@ -10,7 +10,17 @@ export default class ItemService {
     private initialStockValue = 0
 
     public async getAllItems() {
-        return await this.prisma.items.findMany({ orderBy: [{ name: 'asc' }] })
+        return await this.prisma.items.findMany({
+            include: {
+                units: {
+                    select: {
+                        id: true,
+                        symbol: true,
+                    },
+                },
+            },
+            orderBy: [{ name: 'asc' }],
+        })
     }
 
     public async createItem({ name, unit_id }: CreateItemRequest) {

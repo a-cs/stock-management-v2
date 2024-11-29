@@ -30,7 +30,7 @@ export default function Header() {
     const menuItems = []
     if (user?.is_allowed) {
         menuItems.push('Estoque')
-        menuItems.push('Categorias')
+        menuItems.push('Unidades')
         menuItems.push('Movimentações')
     }
 

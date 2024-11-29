@@ -12,16 +12,15 @@ import { Table } from '../../components/Table/style'
 import ModalCreateItem from '../../components/Modals/ModalCreateItem'
 import Button from '../../components/Button'
 
-interface iCategory {
-    id: string
-    name: string
+interface iUnit {
+    id: number
+    symbol: string
 }
 
 interface iItem {
-    id: string
+    id: number
     name: string
-    unit: string
-    category: iCategory
+    units: iUnit
     minimal_stock_alarm: string
     total_stock: string
 }
@@ -73,7 +72,6 @@ export default function Items() {
                         <tr>
                             <th>Id</th>
                             <th>Nome</th>
-                            <th>Categoria</th>
                             <th>Estoque mínimo</th>
                             <th>Estoque total</th>
                             <th>Unidade</th>
@@ -96,9 +94,6 @@ export default function Items() {
                                 </td>
                                 <td data-label="Nome">{item.name}</td>
 
-                                <td data-label="Categoria">
-                                    {item.category.name}
-                                </td>
                                 <td data-label="Estoque mínimo">
                                     {Number(
                                         item.minimal_stock_alarm,
@@ -114,7 +109,9 @@ export default function Items() {
                                         },
                                     )}
                                 </td>
-                                <td data-label="Unidade">{item.unit}</td>
+                                <td data-label="Unidade">
+                                    {item.units.symbol}
+                                </td>
                                 <td data-label="Editar">
                                     <button
                                         type="button"
