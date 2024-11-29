@@ -1,5 +1,5 @@
 import { LoadingContainer, LoadingImage, LoadingTitle } from './styles'
-import loadingImg from '../../assets/loading1.gif'
+import loadingImg from '../../assets/spinning-dots.svg'
 
 export default function LoadingSpinner() {
     return (

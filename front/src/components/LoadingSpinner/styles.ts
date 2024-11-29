@@ -5,15 +5,15 @@ export const LoadingContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     gap: 2rem;
 `
 
 export const LoadingImage = styled.img`
-    margin-bottom: 2px;
-    height: 60px;
+    height: 100px;
 
     @media (min-width: 1000px) {
-        height: 80px;
+        height: 120px;
     }
 `
 

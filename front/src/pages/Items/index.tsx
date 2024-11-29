@@ -12,6 +12,8 @@ import { Table } from '../../components/Table/style'
 import ModalCreateItem from '../../components/Modals/ModalCreateItem'
 import Button from '../../components/Button'
 import LoadingSpinner from '../../components/LoadingSpinner'
+import { ErrorHandler } from '../../helpers/ErrorHandler'
+import ErrorMessage from '../../components/ErrorMessage'
 
 interface iUnit {
     id: number
@@ -28,7 +30,7 @@ interface iItem {
 
 export default function Items() {
     const [items, setItems] = useState<iItem[]>([])
-    const [errorMsg, setErrorMsg] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
     const [loading, setLoading] = useState(false)
     const [openItemModal, setOpenItemModal] = useState(false)
 
@@ -36,13 +38,16 @@ export default function Items() {
         setLoading(true)
         api.get('/items')
             .then((response) => {
-                setErrorMsg(false)
+                // setErrorMsg('')
                 setLoading(false)
                 setItems(response.data)
             })
-            .catch(() => {
+            .catch((error) => {
+                console.log('error:', error)
+                error.message = 'Não foi possivel carregar os dados da tabela.'
+                ErrorHandler(error)
                 setLoading(false)
-                setErrorMsg(true)
+                setErrorMsg('Não foi possivel carregar os dados da tabela.')
             })
     }
 
@@ -73,7 +78,9 @@ export default function Items() {
                         </ButtonMobile>
                     </ButtonContainer>
                 </PageHeader>
-                {loading ? (
+                {errorMsg ? (
+                    <ErrorMessage message={errorMsg} />
+                ) : loading ? (
                     <LoadingSpinner />
                 ) : (
                     <Table>

@@ -10,6 +10,7 @@ import Select from '../../Select'
 import { toast } from 'react-toastify'
 import { ErrorHandler } from '../../../helpers/ErrorHandler'
 import LoadingSpinner from '../../LoadingSpinner'
+import SpinnerIcon from '../../SpinnerIcon'
 
 interface iModalCreateItemProps {
     isOpen: boolean
@@ -30,26 +31,30 @@ export default function ModalCreateItem({
     const [name, setName] = useState('')
     const [unitId, setUnitId] = useState('')
     const [units, setUnits] = useState<iUnit[]>([])
-    const [errorMsg, setErrorMsg] = useState(false)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
+    const [buttonLoading, setButtonLoading] = useState(false)
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        console.log('submit', name, unitId)
         try {
+            setButtonLoading(true)
             await api.post('/items', { name, unit_id: Number(unitId) })
             updateItems()
             toast.success('O item foi criado com sucesso.')
             setIsOpen(false)
+            setButtonLoading(false)
         } catch (error) {
             console.log('error:', error)
             ErrorHandler(error)
+            setButtonLoading(false)
         }
     }
 
     useEffect(() => {
         if (isOpen) {
             setLoading(true)
+            setName('')
+            setUnitId('')
             api.get('/units')
                 .then((response) => {
                     setUnits(response.data)
@@ -57,13 +62,12 @@ export default function ModalCreateItem({
                     setLoading(false)
                 })
                 .catch((error) => {
-                    console.log('error:', error)
                     ErrorHandler(error)
-                    setErrorMsg(true)
+                    setIsOpen(false)
                     setLoading(false)
                 })
         }
-    }, [isOpen])
+    }, [isOpen, setIsOpen])
     return (
         <ModalWithCloseOutside isOpen={isOpen} setIsOpen={setIsOpen}>
             <ModalTitle></ModalTitle>
@@ -91,9 +95,16 @@ export default function ModalCreateItem({
                             <Button
                                 type="submit"
                                 variant="accept"
-                                icon={<FiCheck size={32} />}
+                                icon={
+                                    buttonLoading ? (
+                                        <SpinnerIcon size={32} />
+                                    ) : (
+                                        <FiCheck size={32} />
+                                    )
+                                }
+                                disabled={buttonLoading}
                             >
-                                Confirmar
+                                {buttonLoading ? 'Loading...' : 'Confirmar'}
                             </Button>
                             <Button variant="refuse" icon={<FiX size={32} />}>
                                 Cancelar

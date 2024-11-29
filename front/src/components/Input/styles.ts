@@ -30,7 +30,7 @@ export const InputTitle = styled.span<{ $isInputEmpty: boolean }>`
     font-size: ${(props) => (props.$isInputEmpty ? '1.5rem' : '1.25rem')};
     pointer-events: none;
     left: 12px;
-    top: ${(props) => (props.$isInputEmpty ? '4px' : '-28px')};
+    top: ${(props) => (props.$isInputEmpty ? '6px' : '-28px')};
     transition: 0.2s;
     transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
     opacity: ${(props) => (props.$isInputEmpty ? '0.5' : '0.67')};

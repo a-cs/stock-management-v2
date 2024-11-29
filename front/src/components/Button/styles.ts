@@ -5,6 +5,9 @@ export const StyledButton = styled.button<{
     $hideOnMobile: boolean
 }>`
     width: 260px;
+    @media (min-width: 600px) {
+        width: 300px;
+    }
     display: ${(props) => (props.$hideOnMobile ? 'none' : 'flex')};
     @media (min-width: 1000px) {
         display: flex;
@@ -26,10 +29,17 @@ export const StyledButton = styled.button<{
 
     &:hover {
         background-color: ${(props) =>
-            props.$variant === 'accept'
-                ? props.theme.green
-                : props.theme.red};
+            props.$variant === 'accept' ? props.theme.green : props.theme.red};
         color: ${(props) => props.theme.whiteText};
+    }
+
+    &:disabled {
+        background-color: ${(props) =>
+            props.$variant === 'accept'
+                ? props.theme.lighterGreen
+                : props.theme.red};
+        cursor: not-allowed;
+        opacity: 0.8;
     }
 `
 

@@ -8,6 +8,7 @@ interface iButtonProps {
     type?: 'button' | 'submit'
     onClick?: () => void
     hideOnMobile?: boolean
+    disabled?: boolean
 }
 export default function Button({
     variant,
@@ -16,6 +17,7 @@ export default function Button({
     type = 'button',
     hideOnMobile = false,
     onClick,
+    disabled = false,
 }: iButtonProps) {
     return (
         <StyledButton
@@ -23,6 +25,7 @@ export default function Button({
             onClick={onClick}
             $variant={variant}
             $hideOnMobile={hideOnMobile}
+            disabled={disabled}
         >
             {icon}
             <ButtonTitle>{children}</ButtonTitle>
