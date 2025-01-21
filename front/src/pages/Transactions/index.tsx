@@ -99,7 +99,7 @@ export default function Transactions() {
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Hora/Data</th>
+                                <th>Data/Hora</th>
                                 <th>Realizado por</th>
                                 <th>Item</th>
                                 <th>Tipo</th>
@@ -119,6 +119,7 @@ export default function Transactions() {
                                         {new Date(
                                             transaction.created_at,
                                         ).toLocaleDateString('pt-BR')}
+                                        <br />
                                         {' às '}
                                         {new Date(
                                             transaction.created_at,
