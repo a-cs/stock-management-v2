@@ -7,9 +7,10 @@ itemsRouter.use(ensureUserIsAuthenticated)
 
 const itemController = new ItemController()
 
-itemsRouter.get('/', itemController.getAllitems)
-itemsRouter.post('/', itemController.createitem)
-itemsRouter.patch('/:id', itemController.updateitem)
+itemsRouter.get('/', itemController.getAllItems)
+itemsRouter.get('/ordered', itemController.getAllItemsOrdered)
+itemsRouter.post('/', itemController.createItem)
+itemsRouter.patch('/:id', itemController.updateItem)
 // itemsRouter.delete('/:id', itemController.deleteUnit)
 
 export default itemsRouter

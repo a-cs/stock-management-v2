@@ -11,16 +11,24 @@ export default class ItemService {
 
     public async getAllItems() {
         return await this.prisma.items.findMany({
-            include: {
-                units: {
-                    select: {
-                        id: true,
-                        symbol: true,
-                    },
-                },
-            },
             orderBy: [{ name: 'asc' }],
         })
+    }
+
+    public async getAllItemsOrdered() {
+        return await this.prisma.$queryRaw`
+        	SELECT i.id,
+			i.name,
+			i.minimal_stock_alarm,
+			i.total_stock,
+			i.created_at,
+			i.updated_at,
+			i.unit_id,
+			u.symbol
+        	FROM items i
+        	LEFT JOIN units u ON i.unit_id = u.id
+        	ORDER BY (i.total_stock < i.minimal_stock_alarm) DESC, i.name ASC;
+          `
     }
 
     public async createItem({ name, unit_id }: CreateItemRequest) {

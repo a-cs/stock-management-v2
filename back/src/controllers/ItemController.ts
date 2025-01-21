@@ -12,12 +12,17 @@ export default class ItemController {
         this.itemService = new ItemService()
     }
 
-    public getAllitems = async (req: Request, res: Response) => {
+    public getAllItems = async (req: Request, res: Response) => {
         const items = await this.itemService.getAllItems()
         res.status(200).json(items)
     }
 
-    public createitem = async (req: Request, res: Response) => {
+    public getAllItemsOrdered = async (req: Request, res: Response) => {
+        const items = await this.itemService.getAllItemsOrdered()
+        res.status(200).json(items)
+    }
+
+    public createItem = async (req: Request, res: Response) => {
         try {
             const validatedData = CreateItemSchema.parse(req.body)
             await this.itemService.createItem(validatedData)
@@ -30,7 +35,7 @@ export default class ItemController {
         }
     }
 
-    public updateitem = async (req: Request, res: Response) => {
+    public updateItem = async (req: Request, res: Response) => {
         try {
             const { id: idAsString } = req.params
             const id = Number(idAsString)

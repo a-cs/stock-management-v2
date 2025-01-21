@@ -7,7 +7,7 @@ transactionsRouter.use(ensureUserIsAuthenticated)
 
 const transactionController = new TransactionController()
 
-transactionsRouter.get('/', transactionController.getAllitems)
-transactionsRouter.post('/', transactionController.createitem)
+transactionsRouter.get('/', transactionController.getAllTransactions)
+transactionsRouter.post('/', transactionController.createTransactions)
 
 export default transactionsRouter

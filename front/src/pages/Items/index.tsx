@@ -15,15 +15,11 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 import { ErrorHandler } from '../../helpers/ErrorHandler'
 import ErrorMessage from '../../components/ErrorMessage'
 
-interface iUnit {
-    id: number
-    symbol: string
-}
-
 interface iItem {
     id: number
     name: string
-    units: iUnit
+    unit_id: number
+    symbol: string
     minimal_stock_alarm: string
     total_stock: string
 }
@@ -36,7 +32,7 @@ export default function Items() {
 
     async function getItems() {
         setLoading(true)
-        api.get('/items')
+        api.get('/items/ordered')
             .then((response) => {
                 setErrorMsg('')
                 setLoading(false)
@@ -126,9 +122,7 @@ export default function Items() {
                                             minimumFractionDigits: 3,
                                         })}
                                     </td>
-                                    <td data-label="Unidade">
-                                        {item.units.symbol}
-                                    </td>
+                                    <td data-label="Unidade">{item.symbol}</td>
                                     <td data-label="Editar">
                                         <button
                                             type="button"

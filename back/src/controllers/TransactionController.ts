@@ -12,12 +12,12 @@ export default class TransactionController {
         this.transactionService = new TransactionService()
     }
 
-    public getAllitems = async (req: Request, res: Response) => {
+    public getAllTransactions = async (req: Request, res: Response) => {
         const transaction = await this.transactionService.getAllTransactions()
         res.status(200).json(transaction)
     }
 
-    public createitem = async (req: Request, res: Response) => {
+    public createTransactions = async (req: Request, res: Response) => {
         try {
             const { id: idAsString } = req.user
             const user_id = Number(idAsString)

@@ -115,14 +115,14 @@ export default function Transactions() {
                                             'pt-BR',
                                         )}
                                     </td>
-                                    <td data-label="Hora/Data">
-                                        {new Date(
-                                            transaction.created_at,
-                                        ).toLocaleTimeString('pt-BR')}
-                                        {' de '}
+                                    <td data-label="Data/Hora">
                                         {new Date(
                                             transaction.created_at,
                                         ).toLocaleDateString('pt-BR')}
+                                        {' às '}
+                                        {new Date(
+                                            transaction.created_at,
+                                        ).toLocaleTimeString('pt-BR')}
                                     </td>
                                     <td data-label="Realizado por">
                                         {transaction.users.name}
