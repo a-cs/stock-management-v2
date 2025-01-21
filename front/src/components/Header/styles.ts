@@ -18,7 +18,11 @@ export const HeaderContent = styled.div`
     }
 `
 export const LogoContainer = styled.div`
-    margin: auto 1rem;
+    margin: auto 0.5rem;
+
+    @media (min-width: 600px) {
+        margin: auto 1rem;
+    }
 `
 
 export const LogoImage = styled.img`

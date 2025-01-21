@@ -92,7 +92,7 @@ export const Table = styled.table`
         overflow-wrap: break-word;
         word-wrap: break-word;
         hyphens: auto;
-        height: 2.25rem;
+        min-height: 2.25rem;
     }
 
     @media (min-width: 701px) {

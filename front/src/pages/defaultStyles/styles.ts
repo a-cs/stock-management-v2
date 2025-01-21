@@ -5,8 +5,12 @@ export const PageContent = styled.div`
     width: 100%;
     margin: auto;
     max-width: 1110px;
-    padding: 2rem 1rem;
     height: 100%;
+    padding: 2rem 0.5rem;
+
+    @media (min-width: 600px) {
+        padding: 2rem 1rem;
+    }
 `
 
 export const PageHeader = styled.div`
