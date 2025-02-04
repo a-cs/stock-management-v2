@@ -11,9 +11,9 @@ import { Table } from '../../components/Table/style'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import { ErrorHandler } from '../../helpers/ErrorHandler'
 import ErrorMessage from '../../components/ErrorMessage'
-import ModalCreateUnit from '../../components/Modals/ModalCreateUnit'
+import ModalEditUserPermissions from '../../components/Modals/ModalEditUserPermissions'
 
-interface iUser {
+export interface iUser {
     id: string
     name: string
     email: string
@@ -25,9 +25,11 @@ export default function Users() {
     const [units, setUnits] = useState<iUser[]>([])
     const [errorMsg, setErrorMsg] = useState('')
     const [loading, setLoading] = useState(false)
-    const [openCreateUnitModal, setOpenCreateUnitModal] = useState(false)
+    const [openEditUserPermissions, setOpenEditUserPermissions] =
+        useState(false)
+    const [selectedUser, setSelectedUser] = useState<iUser>()
 
-    async function getUnits() {
+    async function getUsers() {
         setLoading(true)
         api.get('/users')
             .then((response) => {
@@ -45,14 +47,15 @@ export default function Users() {
     }
 
     useEffect(() => {
-        getUnits()
+        getUsers()
     }, [])
     return (
         <>
-            <ModalCreateUnit
-                isOpen={openCreateUnitModal}
-                setIsOpen={setOpenCreateUnitModal}
-                updateUnits={getUnits}
+            <ModalEditUserPermissions
+                isOpen={openEditUserPermissions}
+                setIsOpen={setOpenEditUserPermissions}
+                updateUsers={getUsers}
+                selectedUser={selectedUser}
             />
             <PageContent>
                 <PageHeader>
@@ -123,10 +126,10 @@ export default function Users() {
                                     <td data-label="Editar">
                                         <button
                                             type="button"
-                                            // onClick={() => {
-                                            // 	setEditItemId(item.id)
-                                            // 	toggleEditItemModal()
-                                            // }}
+                                            onClick={() => {
+                                                setSelectedUser(user)
+                                                setOpenEditUserPermissions(true)
+                                            }}
                                         >
                                             <FiEdit
                                                 size="20px"
