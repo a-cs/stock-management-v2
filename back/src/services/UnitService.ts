@@ -47,7 +47,7 @@ export default class UnitService {
         const checkUnitNameExists = await this.prisma.units.findFirst({
             where: { symbol },
         })
-        if (checkUnitNameExists) {
+        if (checkUnitNameExists && checkUnitNameExists.id !== Number(id)) {
             throw new AppError(`A unidade "${symbol}" já existe.`)
         }
         const Unit = await this.prisma.units.update({

@@ -1,4 +1,4 @@
-import { FiCheck, FiX } from 'react-icons/fi'
+import { FiEdit2, FiX } from 'react-icons/fi'
 import ModalWithCloseOutside from '../ModalWithCloseOutside'
 import { ModalFooter } from '../ModalWithCloseOutside/styles'
 import Button from '../../Button'
@@ -48,7 +48,7 @@ export default function ModalEditItem({
                 minimal_stock_alarm: Number(minimalStock),
             })
             updateItems()
-            toast.success(`O item "${name}" foi editado com sucesso.`)
+            toast.success(`O item "${name}" foi alterado com sucesso.`)
             setIsOpen(false)
             setButtonLoading(false)
         } catch (error) {
@@ -113,12 +113,12 @@ export default function ModalEditItem({
                                     buttonLoading ? (
                                         <SpinnerIcon size={32} />
                                     ) : (
-                                        <FiCheck size={32} />
+                                        <FiEdit2 size={32} />
                                     )
                                 }
                                 disabled={buttonLoading}
                             >
-                                {buttonLoading ? 'Loading...' : 'Confirmar'}
+                                {buttonLoading ? 'Loading...' : 'Editar'}
                             </Button>
                             <Button variant="refuse" icon={<FiX size={32} />}>
                                 Cancelar

@@ -14,8 +14,9 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 import { ErrorHandler } from '../../helpers/ErrorHandler'
 import ErrorMessage from '../../components/ErrorMessage'
 import ModalCreateUnit from '../../components/Modals/ModalCreateUnit'
+import ModalEditUnit from '../../components/Modals/ModalEditUnit'
 
-interface iUnit {
+export interface iUnit {
     id: number
     symbol: string
 }
@@ -25,6 +26,8 @@ export default function Units() {
     const [errorMsg, setErrorMsg] = useState('')
     const [loading, setLoading] = useState(false)
     const [openCreateUnitModal, setOpenCreateUnitModal] = useState(false)
+    const [openEditUnitModal, setOpenEditUnitModal] = useState(false)
+    const [selectedUnit, setSelectedUnit] = useState<iUnit>()
 
     async function getUnits() {
         setLoading(true)
@@ -52,6 +55,12 @@ export default function Units() {
                 isOpen={openCreateUnitModal}
                 setIsOpen={setOpenCreateUnitModal}
                 updateUnits={getUnits}
+            />
+            <ModalEditUnit
+                isOpen={openEditUnitModal}
+                setIsOpen={setOpenEditUnitModal}
+                updateUnits={getUnits}
+                selectedUnit={selectedUnit}
             />
             <PageContent>
                 <PageHeader>
@@ -97,10 +106,10 @@ export default function Units() {
                                     <td data-label="Editar">
                                         <button
                                             type="button"
-                                            // onClick={() => {
-                                            // 	setEditItemId(item.id)
-                                            // 	toggleEditItemModal()
-                                            // }}
+                                            onClick={() => {
+                                                setSelectedUnit(unit)
+                                                setOpenEditUnitModal(true)
+                                            }}
                                         >
                                             <FiEdit
                                                 size="20px"
