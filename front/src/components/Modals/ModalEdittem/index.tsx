@@ -11,11 +11,13 @@ import { toast } from 'react-toastify'
 import { ErrorHandler } from '../../../helpers/ErrorHandler'
 import LoadingSpinner from '../../LoadingSpinner'
 import SpinnerIcon from '../../SpinnerIcon'
+import { iItem } from '../../../pages/Items'
 
-interface iModalCreateItemProps {
+interface iModalEditItemProps {
     isOpen: boolean
     setIsOpen: (value: boolean) => void
     updateItems: () => void
+    selectedItem: iItem | undefined
 }
 
 interface iUnit {
@@ -23,12 +25,14 @@ interface iUnit {
     symbol: string
 }
 
-export default function ModalCreateItem({
+export default function ModalEditItem({
     isOpen,
     setIsOpen,
     updateItems,
-}: iModalCreateItemProps) {
+    selectedItem,
+}: iModalEditItemProps) {
     const [name, setName] = useState('')
+    const [minimalStock, setMinimalStock] = useState('0')
     const [unitId, setUnitId] = useState('')
     const [units, setUnits] = useState<iUnit[]>([])
     const [loading, setLoading] = useState(false)
@@ -38,9 +42,13 @@ export default function ModalCreateItem({
         e.preventDefault()
         try {
             setButtonLoading(true)
-            await api.post('/items', { name, unit_id: Number(unitId) })
+            await api.patch(`/items/${selectedItem?.id}`, {
+                name,
+                unit_id: Number(unitId),
+                minimal_stock_alarm: Number(minimalStock),
+            })
             updateItems()
-            toast.success('O item foi criado com sucesso.')
+            toast.success(`O item "${name}" foi editado com sucesso.`)
             setIsOpen(false)
             setButtonLoading(false)
         } catch (error) {
@@ -51,10 +59,11 @@ export default function ModalCreateItem({
     }
 
     useEffect(() => {
-        if (isOpen) {
-            setLoading(true)
-            setName('')
-            setUnitId('')
+        setLoading(true)
+        if (isOpen && selectedItem) {
+            setName(selectedItem?.name)
+            setUnitId(String(selectedItem?.unit_id))
+            setMinimalStock(String(selectedItem.minimal_stock_alarm))
             api.get('/units')
                 .then((response) => {
                     setUnits(response.data)
@@ -67,11 +76,11 @@ export default function ModalCreateItem({
                     setLoading(false)
                 })
         }
-    }, [isOpen, setIsOpen])
+    }, [isOpen, setIsOpen, selectedItem])
     return (
         <ModalWithCloseOutside isOpen={isOpen} setIsOpen={setIsOpen}>
             <FormTitle>
-                <h4>Criar novo item</h4>
+                <h4>Editar item</h4>
             </FormTitle>
             <Form onSubmit={handleSubmit}>
                 {loading ? (
@@ -79,6 +88,12 @@ export default function ModalCreateItem({
                 ) : (
                     <>
                         <Input label="Nome" value={name} setValue={setName} />
+                        <Input
+                            type="number"
+                            label="Estoque mínimo"
+                            value={minimalStock}
+                            setValue={setMinimalStock}
+                        />
                         <Select
                             label="Unidade"
                             value={unitId}

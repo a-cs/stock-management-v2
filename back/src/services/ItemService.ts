@@ -69,7 +69,7 @@ export default class ItemService {
         const checkItemNameExists = await this.prisma.items.findFirst({
             where: { name },
         })
-        if (checkItemNameExists) {
+        if (checkItemNameExists && checkItemNameExists.id !== id) {
             throw new AppError(`O nome "${name}" já está em uso.`)
         }
         const checkItemIdExists = await this.prisma.units.findFirst({

@@ -14,8 +14,9 @@ import Button from '../../components/Button'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import { ErrorHandler } from '../../helpers/ErrorHandler'
 import ErrorMessage from '../../components/ErrorMessage'
+import ModalEditItem from '../../components/Modals/ModalEdittem'
 
-interface iItem {
+export interface iItem {
     id: number
     name: string
     unit_id: number
@@ -28,7 +29,9 @@ export default function Items() {
     const [items, setItems] = useState<iItem[]>([])
     const [errorMsg, setErrorMsg] = useState('')
     const [loading, setLoading] = useState(false)
-    const [openItemModal, setOpenItemModal] = useState(false)
+    const [openCreateItemModal, setOpenCreateItemModal] = useState(false)
+    const [openEditItemModal, setOpenEditItemModal] = useState(false)
+    const [selectedItem, setSelectedItem] = useState<iItem>()
 
     async function getItems() {
         setLoading(true)
@@ -53,9 +56,15 @@ export default function Items() {
     return (
         <>
             <ModalCreateItem
-                isOpen={openItemModal}
-                setIsOpen={setOpenItemModal}
+                isOpen={openCreateItemModal}
+                setIsOpen={setOpenCreateItemModal}
                 updateItems={getItems}
+            />
+            <ModalEditItem
+                isOpen={openEditItemModal}
+                setIsOpen={setOpenEditItemModal}
+                updateItems={getItems}
+                selectedItem={selectedItem}
             />
             <PageContent>
                 <PageHeader>
@@ -65,11 +74,13 @@ export default function Items() {
                             variant="accept"
                             hideOnMobile={true}
                             icon={<FiPlus size={32} />}
-                            onClick={() => setOpenItemModal(true)}
+                            onClick={() => setOpenCreateItemModal(true)}
                         >
                             Criar item
                         </Button>
-                        <ButtonMobile onClick={() => setOpenItemModal(true)}>
+                        <ButtonMobile
+                            onClick={() => setOpenCreateItemModal(true)}
+                        >
                             <FiPlus size="40px" />
                         </ButtonMobile>
                     </ButtonContainer>
@@ -126,10 +137,10 @@ export default function Items() {
                                     <td data-label="Editar">
                                         <button
                                             type="button"
-                                            // onClick={() => {
-                                            // 	setEditItemId(item.id)
-                                            // 	toggleEditItemModal()
-                                            // }}
+                                            onClick={() => {
+                                                setSelectedItem(item)
+                                                setOpenEditItemModal(true)
+                                            }}
                                         >
                                             <FiEdit
                                                 size="20px"
