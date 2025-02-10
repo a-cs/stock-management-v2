@@ -13,6 +13,7 @@ export const FormContainer = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding: 2rem;
     border: 2px solid ${(props) => props.theme.green};
     border-radius: 16px;
@@ -20,7 +21,7 @@ export const FormContainer = styled.div`
 
 export const Form = styled.form`
     height: 100%;
-    width: 80%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
