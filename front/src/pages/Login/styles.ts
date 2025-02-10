@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 
 export const LoginContainer = styled.div`
@@ -9,31 +10,12 @@ export const LoginContainer = styled.div`
     justify-content: center;
 `
 
-// export const FormTitle = styled.div`
-//     margin: 0 0 2.25rem 0;
-//     display: inline-block;
-//     text-align: center;
-//     font-size: 2.5rem;
-//     color: ${(props) => props.theme.black};
-// `
-
-// export const FormContainer = styled.div`
-//     max-width: 94%;
-//     height: 100%;
-//     display: flex;
-//     flex-direction: column;
-//     padding: 2rem;
-//     border: 2px solid ${(props) => props.theme.green};
-//     border-radius: 16px;
-// `
-
-// export const Form = styled.form`
-//     height: 100%;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: space-around;
-//     align-items: center;
-//     font-size: 1rem;
-//     text-align: center;
-//     gap: 2.25rem;
-// `
+export const StyledLink = styled(Link)`
+    font-size: 1.25rem;
+    font-weight: 500;
+    opacity: 0.7;
+    transition: 0.2s;
+    &:hover {
+        color: ${(props) => props.theme.lightGreen};
+    }
+`

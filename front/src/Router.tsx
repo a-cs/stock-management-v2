@@ -7,6 +7,7 @@ import Transactions from './pages/Transactions'
 import Profile from './pages/Profile'
 import Users from './pages/Users'
 import PrivateRouter from './components/PrivateRouter'
+import SignUp from './pages/SignUp'
 
 export function Router() {
     return (
@@ -22,6 +23,7 @@ export function Router() {
                 </Route>
             </Route>
             <Route path="/login" element={<Login />} />
+            <Route path="/criar-conta" element={<SignUp />} />
         </Routes>
     )
 }

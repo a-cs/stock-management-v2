@@ -1,40 +1,45 @@
-import { LoginContainer, StyledLink } from './styles'
-import { useContext, useState } from 'react'
-import { MdLogin } from 'react-icons/md'
+import { LoginContainer, StyledLink } from '../Login/styles'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../contexts/AuthContext'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import { FormContainer, FormTitle, Form } from '../../components/Form/styles'
+import { FiUserPlus } from 'react-icons/fi'
 
-export default function Login() {
+export default function SignUp() {
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [message, setMessage] = useState('')
+    // const [message, setMessage] = useState('')
 
-    const { signIn } = useContext(AuthContext)
     const navigate = useNavigate()
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
-        try {
-            await signIn({
-                email,
-                password,
-            })
-            navigate('/estoque')
-        } catch (error: any) {
-            setMessage(error.response.data.message)
-        }
+        // try {
+        //     await signIn({
+        //         email,
+        //         password,
+        //     })
+        navigate('/')
+        // } catch (error: any) {
+        //     setMessage(error.response.data.message)
+        // }
     }
 
     return (
         <LoginContainer>
             <FormContainer>
                 <FormTitle>
-                    <h4>Login</h4>
+                    <h4>Criar Conta</h4>
                 </FormTitle>
                 <Form onSubmit={handleSubmit}>
+                    <Input
+                        label="Nome"
+                        type="text"
+                        value={name}
+                        setValue={setName}
+                    />
                     <Input
                         label="Email"
                         type="email"
@@ -47,17 +52,14 @@ export default function Login() {
                         value={password}
                         setValue={setPassword}
                     />
-                    <h4>{message}</h4>
                     <Button
                         variant="accept"
                         type="submit"
-                        icon={<MdLogin size={32} />}
+                        icon={<FiUserPlus size={32} />}
                     >
-                        Login
+                        Criar
                     </Button>
-                    <StyledLink to="/criar-conta">
-                        Criar uma nova conta
-                    </StyledLink>
+                    <StyledLink to="/login">Voltar ao login</StyledLink>
                 </Form>
             </FormContainer>
         </LoginContainer>

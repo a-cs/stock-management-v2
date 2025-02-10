@@ -4,7 +4,7 @@ import {
     PageHeader,
     PageTitle,
     IconContainer,
-} from '../defaultStyles/styles'
+} from '../../components/defaultPageStyles/styles'
 import { useEffect, useState } from 'react'
 import api from '../../services/api'
 import { Table } from '../../components/Table/style'
