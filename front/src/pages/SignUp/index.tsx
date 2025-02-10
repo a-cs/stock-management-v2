@@ -5,26 +5,36 @@ import Button from '../../components/Button'
 import Input from '../../components/Input'
 import { FormContainer, FormTitle, Form } from '../../components/Form/styles'
 import { FiUserPlus } from 'react-icons/fi'
+import api from '../../services/api'
+import { ErrorHandler } from '../../helpers/ErrorHandler'
+import { toast } from 'react-toastify'
+import SpinnerIcon from '../../components/SpinnerIcon'
 
 export default function SignUp() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    // const [message, setMessage] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
-        // try {
-        //     await signIn({
-        //         email,
-        //         password,
-        //     })
-        navigate('/')
-        // } catch (error: any) {
-        //     setMessage(error.response.data.message)
-        // }
+        setLoading(false)
+        try {
+            setLoading(true)
+            await api.post('/users', {
+                name,
+                email,
+                password,
+            })
+            toast.success('Conta criada com sucesso.')
+            navigate('/login')
+            setLoading(false)
+        } catch (error: any) {
+            ErrorHandler(error)
+            setLoading(false)
+        }
     }
 
     return (
@@ -53,11 +63,18 @@ export default function SignUp() {
                         setValue={setPassword}
                     />
                     <Button
-                        variant="accept"
                         type="submit"
-                        icon={<FiUserPlus size={32} />}
+                        variant="accept"
+                        icon={
+                            loading ? (
+                                <SpinnerIcon size={32} />
+                            ) : (
+                                <FiUserPlus size={32} />
+                            )
+                        }
+                        disabled={loading}
                     >
-                        Criar
+                        {loading ? 'Loading...' : 'Criar'}
                     </Button>
                     <StyledLink to="/login">Voltar ao login</StyledLink>
                 </Form>
