@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import UserService from '../services/UserService'
 import AppError from '../errors/AppError'
 
-export default async function ensureUserIsAllowed(
+export default async function ensureUserIsAdmin(
     req: Request,
     _res: Response,
     next: NextFunction,
@@ -16,11 +16,8 @@ export default async function ensureUserIsAllowed(
     if (!user) {
         throw new AppError('Usuário não encontrado.', 404)
     }
-    if (!user.is_allowed) {
-        throw new AppError(
-            'O Usuário não tem permissão para acessar essa informação.',
-            401,
-        )
+    if (!user.is_admin) {
+        throw new AppError('O Usuário não tem permissão de administrador.', 401)
     }
     return next()
 }
