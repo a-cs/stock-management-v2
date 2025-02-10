@@ -3,6 +3,7 @@ export const defaultTheme = {
     primary: 'green',
     secundary: 'red',
     text: '#676767',
+    disabledText: '#67676763',
     red: '#ce1e25',
     lighterRed: '#ff6565b0',
     black: '#000000',

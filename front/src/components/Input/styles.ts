@@ -22,9 +22,18 @@ export const StyledInput = styled.input`
         outline: none;
         border-color: ${(props) => props.theme.darkGray};
     }
+
+    &:disabled {
+        cursor: not-allowed;
+        color: ${(props) => props.theme.disabledText};
+        border-color: ${(props) => props.theme.disabledText};
+    }
 `
 
-export const InputTitle = styled.span<{ $isInputEmpty: boolean }>`
+export const InputTitle = styled.span<{
+    $isInputEmpty: boolean
+    $isDisabled: boolean
+}>`
     position: absolute;
     font-weight: ${(props) => (props.$isInputEmpty ? 400 : 700)};
     font-size: ${(props) => (props.$isInputEmpty ? '1.5rem' : '1.25rem')};
@@ -36,4 +45,5 @@ export const InputTitle = styled.span<{ $isInputEmpty: boolean }>`
     opacity: ${(props) => (props.$isInputEmpty ? '0.5' : '0.67')};
     color: ${(props) =>
         props.$isInputEmpty ? props.theme.darkBlue : props.theme.darkGray};
+    opacity: ${(props) => (props.$isDisabled ? 0.35 : 1)};
 `

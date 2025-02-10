@@ -8,5 +8,6 @@ const userController = new UserController()
 usersRouter.post('/', userController.createUser)
 usersRouter.use(ensureUserIsAuthenticated)
 usersRouter.get('/', userController.getAllUsers)
+usersRouter.get('/me', userController.getMyUser)
 
 export default usersRouter

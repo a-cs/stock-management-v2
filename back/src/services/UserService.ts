@@ -14,6 +14,10 @@ export default class UserService {
         return await this.prisma.users.findMany({ orderBy: [{ name: 'asc' }] })
     }
 
+    public async getUser(id: string) {
+        return await this.prisma.users.findFirst({ where: { id: Number(id) } })
+    }
+
     public async createUser({ name, email, password }: iCreateUserRequest) {
         const checkUserExists = await this.prisma.users.findFirst({
             where: { email },
