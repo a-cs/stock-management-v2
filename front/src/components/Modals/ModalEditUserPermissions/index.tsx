@@ -32,16 +32,17 @@ export default function ModalEditUserPermissions({
         e.preventDefault()
         try {
             setButtonLoading(true)
-            await api.patch(`/units/${selectedUser?.id}`, {
+            await api.patch(`/users/${selectedUser?.id}`, {
                 is_allowed: isAllowed,
                 is_admin: isAdmin,
             })
             updateUsers()
-            toast.success('A unidade foi alterada com sucesso.')
+            toast.success(
+                `As permissões de ${selectedUser?.name} foram alteradas com sucesso.`,
+            )
             setIsOpen(false)
             setButtonLoading(false)
         } catch (error) {
-            console.log('error:', error)
             ErrorHandler(error)
             setButtonLoading(false)
         }
@@ -52,6 +53,10 @@ export default function ModalEditUserPermissions({
             console.log('selectedUser:', selectedUser)
             setIsAllowed(selectedUser.is_allowed)
             setIsAdmin(selectedUser.is_admin)
+        }
+        return () => {
+            setIsAllowed(false)
+            setIsAdmin(false)
         }
     }, [isOpen, selectedUser])
     return (
