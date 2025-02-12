@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
-import { PrismaClient } from '@prisma/client'
 import { CreateItemRequest } from '../schemas/items/CreateItemSchema'
 import AppError from '../errors/AppError'
 import { UpdateItemRequest } from '../schemas/items/UpdateItemSchema'
+import { Prisma } from '../helpers/PrismaClient'
 
 export default class ItemService {
-    private prisma = new PrismaClient()
+    private prisma = Prisma.getPrisma()
 
     private initialStockValue = 0
 

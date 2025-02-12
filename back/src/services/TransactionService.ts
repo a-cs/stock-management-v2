@@ -1,11 +1,10 @@
 /* eslint-disable camelcase */
-import { PrismaClient } from '@prisma/client'
 import { CreateTransactionRequest } from '../schemas/transactions/CreateTransactionSchema'
 import AppError from '../errors/AppError'
+import { Prisma } from '../helpers/PrismaClient'
 
 export default class TransactionService {
-    private prisma = new PrismaClient()
-
+    private prisma = Prisma.getPrisma()
     public async getAllTransactions() {
         return await this.prisma.transactions.findMany({
             include: {

@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client'
 import AppError from '../errors/AppError'
 import { compare } from 'bcrypt'
 import { sign } from 'jsonwebtoken'
 import authConfig from '../config/auth'
 import createUserDTO from '../DTOs/userDTO'
+import { Prisma } from '../helpers/PrismaClient'
 
 interface iRequest {
     email: string
@@ -11,7 +11,7 @@ interface iRequest {
 }
 
 export default class AuthService {
-    private prisma = new PrismaClient()
+    private prisma = Prisma.getPrisma()
     public async login({ email, password }: iRequest) {
         const user = await this.prisma.users.findFirst({
             where: { email },

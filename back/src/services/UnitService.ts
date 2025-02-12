@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client'
 import AppError from '../errors/AppError'
+import { Prisma } from '../helpers/PrismaClient'
 
 interface iCreateUnitRequest {
     symbol: string
@@ -15,7 +15,7 @@ interface iUpdateUnitRequest {
 // }
 
 export default class UnitService {
-    private prisma = new PrismaClient()
+    private prisma = Prisma.getPrisma()
     public async getAllUnits() {
         return await this.prisma.units.findMany({
             orderBy: [{ symbol: 'asc' }],

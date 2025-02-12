@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-import { PrismaClient } from '@prisma/client'
 import AppError from '../errors/AppError'
 import { hash } from 'bcrypt'
+import { Prisma } from '../helpers/PrismaClient'
 
 interface iCreateUserRequest {
     name: string
@@ -16,7 +16,7 @@ interface iUpdateUserPermissionsRequest {
 }
 
 export default class UserService {
-    private prisma = new PrismaClient()
+    private prisma = Prisma.getPrisma()
     public async getAllUsers() {
         return await this.prisma.users.findMany({ orderBy: [{ name: 'asc' }] })
     }
