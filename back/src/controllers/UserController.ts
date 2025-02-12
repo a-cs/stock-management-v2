@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Request, Response } from 'express'
 import UserService from '../services/UserService'
 import createUserDTO from '../DTOs/userDTO'
@@ -33,5 +34,16 @@ export default class UserController {
             password,
         })
         res.status(201).send()
+    }
+
+    public updateUserPermissions = async (req: Request, res: Response) => {
+        const { id } = req.params
+        const { is_admin, is_allowed } = req.body
+        await this.userService.updateUserPermissions({
+            id: Number(id),
+            is_admin,
+            is_allowed,
+        })
+        res.status(200).send()
     }
 }

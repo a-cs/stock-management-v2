@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { PrismaClient } from '@prisma/client'
 import AppError from '../errors/AppError'
 import { hash } from 'bcrypt'
@@ -6,6 +7,12 @@ interface iCreateUserRequest {
     name: string
     email: string
     password: string
+}
+
+interface iUpdateUserPermissionsRequest {
+    id: number
+    is_admin: boolean
+    is_allowed: boolean
 }
 
 export default class UserService {
@@ -23,7 +30,7 @@ export default class UserService {
             where: { email },
         })
         if (checkUserExists) {
-            throw new AppError('Email adress already in use')
+            throw new AppError('Endereço de email em uso.')
         }
         const hashedPassword = await hash(password, 8)
         const user = await this.prisma.users.create({
@@ -35,6 +42,31 @@ export default class UserService {
                 is_allowed: false,
             },
         })
+        return user
+    }
+
+    public async updateUserPermissions({
+        id,
+        is_admin,
+        is_allowed,
+    }: iUpdateUserPermissionsRequest) {
+        const checkUserExists = await this.prisma.users.findFirst({
+            where: { id },
+        })
+        if (!checkUserExists) {
+            throw new AppError('Usuário não encontrado.')
+        }
+
+        const user = await this.prisma.users.update({
+            where: {
+                id,
+            },
+            data: {
+                is_admin,
+                is_allowed,
+            },
+        })
+
         return user
     }
 }
