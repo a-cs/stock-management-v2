@@ -154,8 +154,13 @@ export default function Items() {
                         </tbody>
                     </Table>
                 )}
-				
-                <Pagination />
+                <Pagination
+                    currentPage={1}
+                    pageSize={1}
+                    totalCount={1}
+                    incrementPageFunction={() => {}}
+                    decrementPageFunction={() => {}}
+                />
             </PageContent>
         </>
     )

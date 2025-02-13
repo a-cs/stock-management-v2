@@ -16,8 +16,8 @@ export default class TransactionController {
         const { page, pageSize } = req.query
         console.log('page, pageSize:', page, pageSize)
         const data = await this.transactionService.getTransactionsPaginated({
-            page: Number(page),
-            pageSize: Number(pageSize),
+            page: parseInt(req.query.page as string) || 1,
+            pageSize: parseInt(req.query.pageSize as string) || 10,
         })
         res.status(200).json(data)
     }
