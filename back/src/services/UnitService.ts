@@ -10,16 +10,29 @@ interface iUpdateUnitRequest {
     symbol: string
 }
 
-// interface iDeleteUnitRequest {
-//     id: string
-// }
+interface iPaginationRequest {
+    page: number
+    pageSize: number
+}
 
 export default class UnitService {
     private prisma = Prisma.getPrisma()
-    public async getAllUnits() {
-        return await this.prisma.units.findMany({
-            orderBy: [{ symbol: 'asc' }],
-        })
+    public async getUnitsPaginated({ page, pageSize }: iPaginationRequest) {
+        const skip = (page - 1) * pageSize
+        const [units, totalCount] = await Promise.all([
+            this.prisma.units.findMany({
+                skip,
+                take: pageSize,
+                orderBy: [{ symbol: 'asc' }],
+            }),
+            this.prisma.units.count(),
+        ])
+        return {
+            units,
+            totalCount,
+            totalPages: Math.ceil(totalCount / pageSize),
+            currentPage: page,
+        }
     }
 
     public async createUnit({ symbol }: iCreateUnitRequest) {

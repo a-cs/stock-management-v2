@@ -2,6 +2,7 @@
 import AppError from '../errors/AppError'
 import { hash } from 'bcrypt'
 import { Prisma } from '../helpers/PrismaClient'
+import createUserDTO from '../DTOs/userDTO'
 
 interface iCreateUserRequest {
     name: string
@@ -15,10 +16,29 @@ interface iUpdateUserPermissionsRequest {
     is_allowed: boolean
 }
 
+interface iPaginationRequest {
+    page: number
+    pageSize: number
+}
+
 export default class UserService {
     private prisma = Prisma.getPrisma()
-    public async getAllUsers() {
-        return await this.prisma.users.findMany({ orderBy: [{ name: 'asc' }] })
+    public async getUsersPaginated({ page, pageSize }: iPaginationRequest) {
+        const skip = (page - 1) * pageSize
+        const [users, totalCount] = await Promise.all([
+            this.prisma.users.findMany({
+                skip,
+                take: pageSize,
+                orderBy: [{ name: 'asc' }],
+            }),
+            this.prisma.users.count(),
+        ])
+        return {
+            users: users.map(createUserDTO),
+            totalCount,
+            totalPages: Math.ceil(totalCount / pageSize),
+            currentPage: page,
+        }
     }
 
     public async getUser(id: string) {

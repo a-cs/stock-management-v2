@@ -40,9 +40,9 @@ interface iTransaction {
 
 export default function Transactions() {
     const pageSize = 10
-    const [transactions, setTransactions] = useState<iTransaction[]>([])
     const [currentPage, setCurrentPage] = useState(1)
     const [totalCount, setTotalCount] = useState(1)
+    const [transactions, setTransactions] = useState<iTransaction[]>([])
     const [errorMsg, setErrorMsg] = useState('')
     const [loading, setLoading] = useState(false)
     const [openCreateTransactionModal, setOpenCreateTransactionModal] =

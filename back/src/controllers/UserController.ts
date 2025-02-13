@@ -11,10 +11,14 @@ export default class UserController {
         this.userService = new UserService()
     }
 
-    public getAllUsers = async (req: Request, res: Response) => {
-        const users = await this.userService.getAllUsers()
+    public getUsersPaginated = async (req: Request, res: Response) => {
+        const { page, pageSize } = req.query
+        const data = await this.userService.getUsersPaginated({
+            page: parseInt(page as string) || 1,
+            pageSize: parseInt(pageSize as string) || 10,
+        })
 
-        res.status(200).json(users.map(createUserDTO))
+        res.status(200).json(data)
     }
 
     public getMyUser = async (req: Request, res: Response) => {

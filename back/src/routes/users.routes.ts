@@ -14,7 +14,7 @@ usersRouter.get('/me', userController.getMyUser)
 
 usersRouter.use(ensureUserIsAllowed)
 usersRouter.use(ensureUserIsAdmin)
-usersRouter.get('/', userController.getAllUsers)
+usersRouter.get('/', userController.getUsersPaginated)
 usersRouter.patch('/:id', userController.updateUserPermissions)
 
 export default usersRouter

@@ -15,7 +15,6 @@ export default class TransactionService {
         pageSize,
     }: iPaginationRequest) {
         const skip = (page - 1) * pageSize
-        console.log('skip:', skip)
         const [transactions, totalCount] = await Promise.all([
             this.prisma.transactions.findMany({
                 skip,
