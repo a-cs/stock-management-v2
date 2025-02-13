@@ -12,9 +12,14 @@ export default class TransactionController {
         this.transactionService = new TransactionService()
     }
 
-    public getAllTransactions = async (req: Request, res: Response) => {
-        const transaction = await this.transactionService.getAllTransactions()
-        res.status(200).json(transaction)
+    public getTransactionsPaginated = async (req: Request, res: Response) => {
+        const { page, pageSize } = req.query
+        console.log('page, pageSize:', page, pageSize)
+        const data = await this.transactionService.getTransactionsPaginated({
+            page: Number(page),
+            pageSize: Number(pageSize),
+        })
+        res.status(200).json(data)
     }
 
     public createTransactions = async (req: Request, res: Response) => {

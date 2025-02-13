@@ -9,7 +9,7 @@ transactionsRouter.use(ensureUserIsAllowed)
 
 const transactionController = new TransactionController()
 
-transactionsRouter.get('/', transactionController.getAllTransactions)
+transactionsRouter.get('/', transactionController.getTransactionsPaginated)
 transactionsRouter.post('/', transactionController.createTransactions)
 
 export default transactionsRouter

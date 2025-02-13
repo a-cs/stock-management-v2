@@ -3,31 +3,52 @@ import { CreateTransactionRequest } from '../schemas/transactions/CreateTransact
 import AppError from '../errors/AppError'
 import { Prisma } from '../helpers/PrismaClient'
 
+interface iPaginationRequest {
+    page: number
+    pageSize: number
+}
+
 export default class TransactionService {
     private prisma = Prisma.getPrisma()
-    public async getAllTransactions() {
-        return await this.prisma.transactions.findMany({
-            include: {
-                users: {
-                    select: {
-                        id: true,
-                        name: true,
+    public async getTransactionsPaginated({
+        page,
+        pageSize,
+    }: iPaginationRequest) {
+        const skip = (page - 1) * pageSize
+        console.log('skip:', skip)
+        const [transactions, totalCount] = await Promise.all([
+            this.prisma.transactions.findMany({
+                skip,
+                take: pageSize,
+                include: {
+                    users: {
+                        select: {
+                            id: true,
+                            name: true,
+                        },
                     },
-                },
-                items: {
-                    select: {
-                        id: true,
-                        name: true,
-                        units: {
-                            select: {
-                                symbol: true,
+                    items: {
+                        select: {
+                            id: true,
+                            name: true,
+                            units: {
+                                select: {
+                                    symbol: true,
+                                },
                             },
                         },
                     },
                 },
-            },
-            orderBy: [{ created_at: 'desc' }],
-        })
+                orderBy: [{ created_at: 'desc' }],
+            }),
+            this.prisma.transactions.count(),
+        ])
+        return {
+            transactions,
+            totalCount,
+            totalPages: Math.ceil(totalCount / pageSize),
+            currentPage: page,
+        }
     }
 
     public async createTransaction({
