@@ -15,6 +15,7 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 import { ErrorHandler } from '../../helpers/ErrorHandler'
 import ErrorMessage from '../../components/ErrorMessage'
 import ModalEditItem from '../../components/Modals/ModalEdittem'
+import Pagination from '../../components/Pagination'
 
 export interface iItem {
     id: number
@@ -153,6 +154,8 @@ export default function Items() {
                         </tbody>
                     </Table>
                 )}
+				
+                <Pagination />
             </PageContent>
         </>
     )
