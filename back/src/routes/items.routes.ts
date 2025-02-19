@@ -10,7 +10,7 @@ itemsRouter.use(ensureUserIsAllowed)
 const itemController = new ItemController()
 
 itemsRouter.get('/', itemController.getAllItems)
-itemsRouter.get('/ordered', itemController.getAllItemsOrdered)
+itemsRouter.get('/paginated', itemController.getItemsPaginated)
 itemsRouter.post('/', itemController.createItem)
 itemsRouter.patch('/:id', itemController.updateItem)
 

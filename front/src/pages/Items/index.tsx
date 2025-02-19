@@ -27,6 +27,9 @@ export interface iItem {
 }
 
 export default function Items() {
+    const pageSize = 10
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalCount, setTotalCount] = useState(1)
     const [items, setItems] = useState<iItem[]>([])
     const [errorMsg, setErrorMsg] = useState('')
     const [loading, setLoading] = useState(false)
@@ -36,11 +39,12 @@ export default function Items() {
 
     async function getItems() {
         setLoading(true)
-        api.get('/items/ordered')
+        api.get(`/items/paginated?page=${currentPage}&pageSize=${pageSize}`)
             .then((response) => {
                 setErrorMsg('')
                 setLoading(false)
-                setItems(response.data)
+                setItems(response.data.items)
+                setTotalCount(response.data.totalCount)
             })
             .catch((error) => {
                 console.log('error:', error)
@@ -51,20 +55,43 @@ export default function Items() {
             })
     }
 
+    function incrementPage() {
+        if (currentPage * pageSize < totalCount) {
+            setCurrentPage((current) => current + 1)
+            getItems()
+        }
+    }
+
+    function decrementPage() {
+        if (currentPage > 1) {
+            setCurrentPage((current) => current - 1)
+            getItems()
+        }
+    }
+
+    function updateItems() {
+        if (currentPage !== 1) {
+            setCurrentPage(1)
+        } else {
+            getItems()
+        }
+    }
+
     useEffect(() => {
         getItems()
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage])
     return (
         <>
             <ModalCreateItem
                 isOpen={openCreateItemModal}
                 setIsOpen={setOpenCreateItemModal}
-                updateItems={getItems}
+                updateItems={updateItems}
             />
             <ModalEditItem
                 isOpen={openEditItemModal}
                 setIsOpen={setOpenEditItemModal}
-                updateItems={getItems}
+                updateItems={updateItems}
                 selectedItem={selectedItem}
             />
             <PageContent>
@@ -91,76 +118,80 @@ export default function Items() {
                 ) : loading ? (
                     <LoadingSpinner />
                 ) : (
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Nome</th>
-                                <th>Estoque mínimo</th>
-                                <th>Estoque total</th>
-                                <th>Unidade</th>
-                                <th>Editar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {items.map((item: iItem) => (
-                                <tr
-                                    key={item.id}
-                                    className={
-                                        Number(item.total_stock) <
-                                        Number(item.minimal_stock_alarm)
-                                            ? 'LowStock'
-                                            : ''
-                                    }
-                                >
-                                    <td data-label="Id">
-                                        {Number(item.id).toLocaleString(
-                                            'pt-BR',
-                                        )}
-                                    </td>
-                                    <td data-label="Nome">{item.name}</td>
-
-                                    <td data-label="Estoque mínimo">
-                                        {Number(
-                                            item.minimal_stock_alarm,
-                                        ).toLocaleString('pt-BR', {
-                                            minimumFractionDigits: 3,
-                                        })}
-                                    </td>
-                                    <td data-label="Estoque total">
-                                        {Number(
-                                            item.total_stock,
-                                        ).toLocaleString('pt-BR', {
-                                            minimumFractionDigits: 3,
-                                        })}
-                                    </td>
-                                    <td data-label="Unidade">{item.symbol}</td>
-                                    <td data-label="Editar">
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setSelectedItem(item)
-                                                setOpenEditItemModal(true)
-                                            }}
-                                        >
-                                            <FiEdit
-                                                size="20px"
-                                                strokeWidth="2"
-                                            />
-                                        </button>
-                                    </td>
+                    <>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nome</th>
+                                    <th>Estoque mínimo</th>
+                                    <th>Estoque total</th>
+                                    <th>Unidade</th>
+                                    <th>Editar</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                            </thead>
+                            <tbody>
+                                {items.map((item: iItem) => (
+                                    <tr
+                                        key={item.id}
+                                        className={
+                                            Number(item.total_stock) <
+                                            Number(item.minimal_stock_alarm)
+                                                ? 'LowStock'
+                                                : ''
+                                        }
+                                    >
+                                        <td data-label="Id">
+                                            {Number(item.id).toLocaleString(
+                                                'pt-BR',
+                                            )}
+                                        </td>
+                                        <td data-label="Nome">{item.name}</td>
+
+                                        <td data-label="Estoque mínimo">
+                                            {Number(
+                                                item.minimal_stock_alarm,
+                                            ).toLocaleString('pt-BR', {
+                                                minimumFractionDigits: 3,
+                                            })}
+                                        </td>
+                                        <td data-label="Estoque total">
+                                            {Number(
+                                                item.total_stock,
+                                            ).toLocaleString('pt-BR', {
+                                                minimumFractionDigits: 3,
+                                            })}
+                                        </td>
+                                        <td data-label="Unidade">
+                                            {item.symbol}
+                                        </td>
+                                        <td data-label="Editar">
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setSelectedItem(item)
+                                                    setOpenEditItemModal(true)
+                                                }}
+                                            >
+                                                <FiEdit
+                                                    size="20px"
+                                                    strokeWidth="2"
+                                                />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                        <Pagination
+                            currentPage={currentPage}
+                            pageSize={pageSize}
+                            totalCount={totalCount}
+                            incrementPageFunction={incrementPage}
+                            decrementPageFunction={decrementPage}
+                        />
+                    </>
                 )}
-                <Pagination
-                    currentPage={1}
-                    pageSize={1}
-                    totalCount={1}
-                    incrementPageFunction={() => {}}
-                    decrementPageFunction={() => {}}
-                />
             </PageContent>
         </>
     )

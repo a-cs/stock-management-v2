@@ -8,6 +8,11 @@ export default class UnitController {
         this.unitService = new UnitService()
     }
 
+    public getAllUnits = async (req: Request, res: Response) => {
+        const units = await this.unitService.getAllUnits()
+        res.status(200).json(units)
+    }
+
     public getUnitsPaginated = async (req: Request, res: Response) => {
         const { page, pageSize } = req.query
         const data = await this.unitService.getUnitsPaginated({

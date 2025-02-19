@@ -4,6 +4,11 @@ import AppError from '../errors/AppError'
 import { UpdateItemRequest } from '../schemas/items/UpdateItemSchema'
 import { Prisma } from '../helpers/PrismaClient'
 
+interface iPaginationRequest {
+    page: number
+    pageSize: number
+}
+
 export default class ItemService {
     private prisma = Prisma.getPrisma()
 
@@ -13,6 +18,33 @@ export default class ItemService {
         return await this.prisma.items.findMany({
             orderBy: [{ name: 'asc' }],
         })
+    }
+
+    public async getItemsPaginated({ page, pageSize }: iPaginationRequest) {
+        const skip = (page - 1) * pageSize
+        const [items, totalCount] = await Promise.all([
+            this.prisma.$queryRaw`
+        	SELECT i.id,
+			i.name,
+			i.minimal_stock_alarm,
+			i.total_stock,
+			i.created_at,
+			i.updated_at,
+			i.unit_id,
+			u.symbol
+        	FROM items i
+        	LEFT JOIN units u ON i.unit_id = u.id
+        	ORDER BY (i.total_stock < i.minimal_stock_alarm) DESC, i.name ASC
+			LIMIT ${pageSize} OFFSET ${skip};
+          `,
+            this.prisma.items.count(),
+        ])
+        return {
+            items,
+            totalCount,
+            totalPages: Math.ceil(totalCount / pageSize),
+            currentPage: page,
+        }
     }
 
     public async getAllItemsOrdered() {

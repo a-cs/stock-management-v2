@@ -17,6 +17,12 @@ interface iPaginationRequest {
 
 export default class UnitService {
     private prisma = Prisma.getPrisma()
+    public async getAllUnits() {
+        return await this.prisma.units.findMany({
+            orderBy: [{ symbol: 'asc' }],
+        })
+    }
+
     public async getUnitsPaginated({ page, pageSize }: iPaginationRequest) {
         const skip = (page - 1) * pageSize
         const [units, totalCount] = await Promise.all([

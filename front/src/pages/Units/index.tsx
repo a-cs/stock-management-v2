@@ -35,7 +35,7 @@ export default function Units() {
 
     async function getUnits() {
         setLoading(true)
-        api.get(`/units?page=${currentPage}&pageSize=${pageSize}`)
+        api.get(`/units/paginated?page=${currentPage}&pageSize=${pageSize}`)
             .then((response) => {
                 setErrorMsg('')
                 setLoading(false)

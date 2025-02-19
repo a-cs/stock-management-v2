@@ -9,7 +9,8 @@ unitsRouter.use(ensureUserIsAllowed)
 
 const unitController = new UnitController()
 
-unitsRouter.get('/', unitController.getUnitsPaginated)
+unitsRouter.get('/', unitController.getAllUnits)
+unitsRouter.get('/paginated', unitController.getUnitsPaginated)
 unitsRouter.post('/', unitController.createUnit)
 unitsRouter.patch('/:id', unitController.updateUnit)
 

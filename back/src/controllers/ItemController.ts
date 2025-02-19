@@ -17,9 +17,13 @@ export default class ItemController {
         res.status(200).json(items)
     }
 
-    public getAllItemsOrdered = async (req: Request, res: Response) => {
-        const items = await this.itemService.getAllItemsOrdered()
-        res.status(200).json(items)
+    public getItemsPaginated = async (req: Request, res: Response) => {
+        const { page, pageSize } = req.query
+        const data = await this.itemService.getItemsPaginated({
+            page: parseInt(page as string) || 1,
+            pageSize: parseInt(pageSize as string) || 10,
+        })
+        res.status(200).json(data)
     }
 
     public createItem = async (req: Request, res: Response) => {
