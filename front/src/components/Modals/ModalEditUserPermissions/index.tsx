@@ -62,7 +62,7 @@ export default function ModalEditUserPermissions({
     return (
         <ModalWithCloseOutside isOpen={isOpen} setIsOpen={setIsOpen}>
             <FormTitle>
-                <h4>Editar permissões do usuário</h4>
+                <h4>Editar permissões</h4>
             </FormTitle>
             <Form onSubmit={handleSubmit}>
                 <ToogleSwitch
