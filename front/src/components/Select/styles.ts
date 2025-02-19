@@ -1,12 +1,17 @@
 import styled from 'styled-components'
 
-export const StyledSelect = styled.select`
+export const StyledSelect = styled.select<{ $zIndex: number }>`
+    top: 0;
+    left: 0;
     width: 100%;
     padding: 0rem 0.75rem;
     font-weight: 400;
     font-size: 1.5rem;
-    height: 2.5rem;
+    min-height: 2.5rem;
+    max-height: 8rem;
+    z-index: ${(props) => props.$zIndex};
     display: inline-block;
+    position: absolute;
     border: 2px solid ${(props) => props.theme.lighterGreen};
     border-radius: 16px;
     box-shadow: none;
@@ -29,4 +34,8 @@ export const SelectTitle = styled.span<{ $isInputEmpty: boolean }>`
     opacity: ${(props) => (props.$isInputEmpty ? '0.5' : '0.67')};
     color: ${(props) =>
         props.$isInputEmpty ? props.theme.darkBlue : props.theme.darkGray};
+`
+
+export const Spacer = styled.div`
+    /* margin-bottom: 1px; */
 `

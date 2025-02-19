@@ -23,6 +23,11 @@ interface iUnit {
     symbol: string
 }
 
+export const convertUnitToOptions = (unit: iUnit) => ({
+    value: unit.id,
+    label: unit.symbol,
+})
+
 export default function ModalCreateItem({
     isOpen,
     setIsOpen,
@@ -83,13 +88,8 @@ export default function ModalCreateItem({
                             label="Unidade"
                             value={unitId}
                             setValue={setUnitId}
-                        >
-                            {units.map((unit: iUnit) => (
-                                <option value={unit.id} key={unit.id}>
-                                    {unit.symbol}
-                                </option>
-                            ))}
-                        </Select>
+                            options={units.map(convertUnitToOptions)}
+                        />
                         <ModalFooter>
                             <Button
                                 type="submit"

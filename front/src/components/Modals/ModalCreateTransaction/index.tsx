@@ -43,6 +43,22 @@ export default function ModalModalCreateTransaction({
     const [loading, setLoading] = useState(false)
     const [buttonLoading, setButtonLoading] = useState(false)
 
+    const transactionTypeOptions = [
+        {
+            value: 'in',
+            label: 'Entrada',
+        },
+        {
+            value: 'out',
+            label: 'Saída',
+        },
+    ]
+
+    const convertItemToOptions = (item: iItem) => ({
+        value: item.id,
+        label: item.name,
+    })
+
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
         try {
@@ -96,17 +112,15 @@ export default function ModalModalCreateTransaction({
                             label="Item"
                             value={itemId}
                             setValue={setItemId}
-                        >
-                            {items.map((item: iItem) => (
-                                <option value={item.id} key={item.id}>
-                                    {item.name}
-                                </option>
-                            ))}
-                        </Select>
-                        <Select label="Tipo" value={type} setValue={setType}>
-                            <option value={'in'}>Entrada</option>
-                            <option value={'out'}>Saída</option>
-                        </Select>
+                            zIndex={2}
+                            options={items.map(convertItemToOptions)}
+                        />
+                        <Select
+                            label="Tipo"
+                            value={type}
+                            setValue={setType}
+                            options={transactionTypeOptions}
+                        />
                         <Input
                             label="Quantidade"
                             value={quantity}

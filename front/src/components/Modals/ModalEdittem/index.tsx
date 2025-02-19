@@ -12,6 +12,7 @@ import { ErrorHandler } from '../../../helpers/ErrorHandler'
 import LoadingSpinner from '../../LoadingSpinner'
 import SpinnerIcon from '../../SpinnerIcon'
 import { iItem } from '../../../pages/Items'
+import { convertUnitToOptions } from '../ModalCreateItem'
 
 interface iModalEditItemProps {
     isOpen: boolean
@@ -98,13 +99,8 @@ export default function ModalEditItem({
                             label="Unidade"
                             value={unitId}
                             setValue={setUnitId}
-                        >
-                            {units.map((unit: iUnit) => (
-                                <option value={unit.id} key={unit.id}>
-                                    {unit.symbol}
-                                </option>
-                            ))}
-                        </Select>
+                            options={units.map(convertUnitToOptions)}
+                        />
                         <ModalFooter>
                             <Button
                                 type="submit"

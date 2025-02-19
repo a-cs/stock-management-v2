@@ -28,5 +28,5 @@ export const Form = styled.form`
     align-items: center;
     font-size: 1rem;
     text-align: center;
-    gap: 2.25rem;
+    gap: 2.5rem;
 `
