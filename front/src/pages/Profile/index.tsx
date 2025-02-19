@@ -13,12 +13,15 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 import { ProfileContainer } from './styles'
 import Button from '../../components/Button'
 import { TbLockCog } from 'react-icons/tb'
+import ModalChangePassword from '../../components/Modals/ModalChangePassword'
 
 export default function Profile() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
     const [loading, setLoading] = useState(false)
+    const [openChangePasswordModal, setOpenChangePasswordModal] =
+        useState(false)
 
     async function getMyUser() {
         setLoading(true)
@@ -43,39 +46,46 @@ export default function Profile() {
     }, [])
 
     return (
-        <PageContent>
-            <PageHeader>
-                <PageTitle>Perfil</PageTitle>
-            </PageHeader>
-            <ProfileContainer>
-                {errorMsg ? (
-                    <ErrorMessage message={errorMsg} />
-                ) : loading ? (
-                    <LoadingSpinner />
-                ) : (
-                    <Form>
-                        <Input
-                            label="Nome"
-                            value={name}
-                            setValue={setName}
-                            disabled
-                        />
-                        <Input
-                            label="Email"
-                            value={email}
-                            setValue={setEmail}
-                            disabled
-                        />
-                        <Button
-                            variant="accept"
-                            type="button"
-                            icon={<TbLockCog size={32} />}
-                        >
-                            Alterar senha
-                        </Button>
-                    </Form>
-                )}
-            </ProfileContainer>
-        </PageContent>
+        <>
+            <ModalChangePassword
+                isOpen={openChangePasswordModal}
+                setIsOpen={setOpenChangePasswordModal}
+            />
+            <PageContent>
+                <PageHeader>
+                    <PageTitle>Perfil</PageTitle>
+                </PageHeader>
+                <ProfileContainer>
+                    {errorMsg ? (
+                        <ErrorMessage message={errorMsg} />
+                    ) : loading ? (
+                        <LoadingSpinner />
+                    ) : (
+                        <Form>
+                            <Input
+                                label="Nome"
+                                value={name}
+                                setValue={setName}
+                                disabled
+                            />
+                            <Input
+                                label="Email"
+                                value={email}
+                                setValue={setEmail}
+                                disabled
+                            />
+                            <Button
+                                variant="accept"
+                                type="button"
+                                icon={<TbLockCog size={32} />}
+                                onClick={() => setOpenChangePasswordModal(true)}
+                            >
+                                Alterar senha
+                            </Button>
+                        </Form>
+                    )}
+                </ProfileContainer>
+            </PageContent>
+        </>
     )
 }
