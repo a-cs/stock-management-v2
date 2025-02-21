@@ -29,7 +29,7 @@ export default function ModalChangePassword({
         e.preventDefault()
         try {
             setButtonLoading(true)
-            await api.patch('/user', {
+            await api.put('/users/password', {
                 currentPassword,
                 newPassword,
                 confirmNewPassword,
@@ -38,7 +38,6 @@ export default function ModalChangePassword({
             setIsOpen(false)
             setButtonLoading(false)
         } catch (error) {
-            console.log('error:', error)
             ErrorHandler(error)
             setButtonLoading(false)
         }

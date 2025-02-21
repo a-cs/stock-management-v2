@@ -60,10 +60,8 @@ export function AuthProvider({ children }: iAuthProviderProps) {
             token,
             user,
         }: { token: string; user: iUser & iExtraUserFields } = response.data
-        console.log('user auth:', user)
         delete user.created_at
         delete user.updated_at
-        console.log('clean user auth:', user)
 
         localStorage.setItem('@EstoqueLEM:token', token)
         localStorage.setItem('@EstoqueLEM:user', JSON.stringify(user))

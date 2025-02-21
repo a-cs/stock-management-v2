@@ -6,7 +6,6 @@ export function ErrorHandler(error: unknown) {
         toast(error.response.data.message, {
             type: 'error',
             draggable: false,
-            toastId: 'error',
         })
     } else {
         toast((error as Error).message, {
