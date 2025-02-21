@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 import AppError from '../errors/AppError'
-import { hash } from 'bcrypt'
+import { compare, hash } from 'bcrypt'
 import { Prisma } from '../helpers/PrismaClient'
 import createUserDTO from '../DTOs/userDTO'
+import { UpdateUserPasswordRequest } from '../schemas/items/UpdateUserPasswordSchema'
 
 interface iCreateUserRequest {
     name: string
@@ -10,15 +11,14 @@ interface iCreateUserRequest {
     password: string
 }
 
+interface iPaginationRequest {
+    page: number
+    pageSize: number
+}
 interface iUpdateUserPermissionsRequest {
     id: number
     is_admin: boolean
     is_allowed: boolean
-}
-
-interface iPaginationRequest {
-    page: number
-    pageSize: number
 }
 
 export default class UserService {
@@ -84,6 +84,43 @@ export default class UserService {
             data: {
                 is_admin,
                 is_allowed,
+            },
+        })
+
+        return user
+    }
+
+    public async updateUserPassword({
+        id,
+        currentPassword,
+        newPassword,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        confirmNewPassword,
+    }: UpdateUserPasswordRequest) {
+        const checkUserExists = await this.prisma.users.findFirst({
+            where: { id },
+        })
+        if (!checkUserExists) {
+            throw new AppError('Usuário não encontrado.')
+        }
+
+        const passwordMatched = await compare(
+            currentPassword,
+            checkUserExists.password,
+        )
+
+        if (!passwordMatched) {
+            throw new AppError('Senha incorreta.', 401)
+        }
+
+        const hashedPassword = await hash(newPassword, 8)
+
+        const user = await this.prisma.users.update({
+            where: {
+                id,
+            },
+            data: {
+                password: hashedPassword,
             },
         })
 

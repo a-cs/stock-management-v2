@@ -7,11 +7,11 @@ import Button from '../../components/Button'
 import Input from '../../components/Input'
 import { FormContainer, FormTitle, Form } from '../../components/Form/styles'
 import SpinnerIcon from '../../components/SpinnerIcon'
+import { ErrorHandler } from '../../helpers/ErrorHandler'
 
 export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(false)
 
     const { signIn } = useContext(AuthContext)
@@ -29,7 +29,7 @@ export default function Login() {
             navigate('/estoque')
             setLoading(false)
         } catch (error: any) {
-            setMessage(error.response.data.message)
+            ErrorHandler(error)
             setLoading(false)
         }
     }
@@ -53,7 +53,6 @@ export default function Login() {
                         value={password}
                         setValue={setPassword}
                     />
-                    <h4>{message}</h4>
                     <Button
                         type="submit"
                         variant="accept"

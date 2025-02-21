@@ -3,6 +3,8 @@ import { Request, Response } from 'express'
 import UserService from '../services/UserService'
 import createUserDTO from '../DTOs/userDTO'
 import AppError from '../errors/AppError'
+import { UpdateUserPasswordSchema } from '../schemas/items/UpdateUserPasswordSchema'
+import { ZodError } from 'zod'
 
 export default class UserController {
     private userService: UserService
@@ -49,5 +51,21 @@ export default class UserController {
             is_allowed,
         })
         res.status(200).send()
+    }
+
+    public updateUserPassword = async (req: Request, res: Response) => {
+        try {
+            const { id: idAsString } = req.user
+            const id = Number(idAsString)
+            const data = { id, ...req.body }
+            const validatedData = UpdateUserPasswordSchema.parse(data)
+            await this.userService.updateUserPassword(validatedData)
+            res.status(200).send()
+        } catch (error) {
+            if (error instanceof ZodError) {
+                throw new AppError(error.errors.at(0)?.message || '')
+            }
+            throw new AppError((error as AppError).message)
+        }
     }
 }

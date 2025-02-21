@@ -11,6 +11,7 @@ usersRouter.post('/', userController.createUser)
 
 usersRouter.use(ensureUserIsAuthenticated)
 usersRouter.get('/me', userController.getMyUser)
+usersRouter.put('/password', userController.updateUserPassword)
 
 usersRouter.use(ensureUserIsAllowed)
 usersRouter.use(ensureUserIsAdmin)
