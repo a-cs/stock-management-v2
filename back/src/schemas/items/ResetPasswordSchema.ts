@@ -1,20 +1,11 @@
 import { z } from 'zod'
 
-export const UpdateUserPasswordSchema = z
+export const ResetPasswordSchema = z
     .object({
-        id: z
-            .number({
-                required_error: 'O id de usuário é obrigatório.',
-                invalid_type_error: 'O id de usuário precisa ser um número.',
-            })
-            .int('O id de usuário precisa ser inteiro.')
-            .min(1, 'O id de usuário precisar ser maior que zero.'),
-        currentPassword: z
-            .string({
-                required_error: 'A senha atual é obrigatória.',
-                invalid_type_error: 'A senha precisa ser uma string.',
-            })
-            .min(6, 'A senha precisa conter no mínimo 6 caracteres.'),
+        resetToken: z.string({
+            required_error: 'O token é obrigatório.',
+            invalid_type_error: 'O token precisa ser uma string.',
+        }),
         newPassword: z
             .string({
                 required_error: 'A nova senha atual é obrigatória.',
@@ -38,4 +29,4 @@ export const UpdateUserPasswordSchema = z
         path: ['confirm'],
     })
 
-export type UpdateUserPasswordRequest = z.infer<typeof UpdateUserPasswordSchema>
+export type ResetPasswordRequest = z.infer<typeof ResetPasswordSchema>

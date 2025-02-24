@@ -4,6 +4,10 @@ import { compare, hash } from 'bcrypt'
 import { Prisma } from '../helpers/PrismaClient'
 import createUserDTO from '../DTOs/userDTO'
 import { UpdateUserPasswordRequest } from '../schemas/items/UpdateUserPasswordSchema'
+import { randomUUID as uuidV4 } from 'crypto'
+import { ForgotPasswordRequest } from '../schemas/items/ForgotPasswordSchema'
+import { ResetPasswordRequest } from '../schemas/items/ResetPasswordSchema'
+import { Mailer } from '../helpers/Mailer'
 
 interface iCreateUserRequest {
     name: string
@@ -125,5 +129,72 @@ export default class UserService {
         })
 
         return user
+    }
+
+    public async forgotPassword({ email }: ForgotPasswordRequest) {
+        const oneHour = 60 * 60 * 1000
+        const message =
+            'Caso o email do usuário esteja cadastrado, você recebera um email para alterar a senha.'
+        const mailer = Mailer.getInstance()
+
+        const checkUserExists = await this.prisma.users.findFirst({
+            where: { email },
+        })
+
+        if (!checkUserExists) {
+            return message
+        }
+
+        const resetToken = uuidV4()
+        const resetTokenExpiryDate = new Date(Date.now() + oneHour)
+        console.log(' resetToken:', resetToken, resetTokenExpiryDate)
+
+        await this.prisma.users.update({
+            where: { email },
+            data: {
+                reset_token: resetToken,
+                reset_token_expire_date: resetTokenExpiryDate,
+            },
+        })
+
+        // send email
+        const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`
+        await mailer.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: `IF Stoq - ${process.env.LAB_NAME} - Alteração de senha`,
+            html: `<p><a href="${resetLink}">Clique aqui para resetar a sua senha.</a></p><p>Esse link é valido por 1 hora.</p>`,
+        })
+
+        return message
+    }
+
+    public async resetPassword({
+        resetToken,
+        newPassword,
+    }: ResetPasswordRequest) {
+        const checkUserExists = await this.prisma.users.findFirst({
+            where: {
+                reset_token: resetToken,
+                reset_token_expire_date: { gte: new Date() },
+            },
+        })
+
+        if (!checkUserExists) {
+            throw new AppError('Token invalido/expirado.')
+        }
+
+        const hashedPassword = await hash(newPassword, 8)
+
+        await this.prisma.users.update({
+            where: {
+                id: checkUserExists.id,
+            },
+            data: {
+                password: hashedPassword,
+                reset_token: null,
+                reset_token_expire_date: null,
+            },
+        })
     }
 }

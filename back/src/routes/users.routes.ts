@@ -8,6 +8,8 @@ const usersRouter = Router()
 const userController = new UserController()
 
 usersRouter.post('/', userController.createUser)
+usersRouter.post('/forgot-password', userController.forgotPassword)
+usersRouter.post('/reset-password', userController.resetPassword)
 
 usersRouter.use(ensureUserIsAuthenticated)
 usersRouter.get('/me', userController.getMyUser)

@@ -40,13 +40,15 @@ model units {
 }
 
 model users {
-  id           Int            @id(map: "PK_a3ffb1c0c8416b9fc6f907b7433") @default(autoincrement())
-  name         String         @db.VarChar
-  email        String         @unique(map: "UQ_97672ac88f789774dd47f7c8be3") @db.VarChar
-  password     String         @db.VarChar
-  is_admin     Boolean
-  is_allowed   Boolean
-  created_at   DateTime       @default(now()) @db.Timestamp(6)
-  updated_at   DateTime       @default(now()) @db.Timestamp(6)
-  transactions transactions[]
+  id                      Int            @id(map: "PK_a3ffb1c0c8416b9fc6f907b7433") @default(autoincrement())
+  name                    String         @db.VarChar
+  email                   String         @unique(map: "UQ_97672ac88f789774dd47f7c8be3") @db.VarChar
+  password                String         @db.VarChar
+  is_admin                Boolean
+  is_allowed              Boolean
+  reset_token             String?        @db.VarChar
+  reset_token_expire_date DateTime?      @db.Timestamp(6)
+  created_at              DateTime       @default(now()) @db.Timestamp(6)
+  updated_at              DateTime       @default(now()) @db.Timestamp(6)
+  transactions            transactions[]
 }

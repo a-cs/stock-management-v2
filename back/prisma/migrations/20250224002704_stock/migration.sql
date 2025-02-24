@@ -42,6 +42,8 @@ CREATE TABLE "users" (
     "password" VARCHAR NOT NULL,
     "is_admin" BOOLEAN NOT NULL,
     "is_allowed" BOOLEAN NOT NULL,
+    "reset_token" VARCHAR,
+    "reset_token_expire_date" TIMESTAMP(6),
     "created_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
