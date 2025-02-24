@@ -16,13 +16,14 @@ import {
     ProfileName,
 } from './styles'
 
-import logoIFCE from '../../assets/logo_ifce_fortaleza.png'
+import logoIF from '../../assets/logo_if.png'
 import { FiMenu, FiUser, FiX } from 'react-icons/fi'
 import { useLocation } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
 
 export default function Header() {
+    const labName = import.meta.env.VITE_LAB_NAME || 'Laboratório'
     const { user, signOut } = useContext(AuthContext)
     const location = useLocation()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -72,8 +73,8 @@ export default function Header() {
         <HeaderContainer>
             <HeaderContent>
                 <LogoContainer>
-                    <LogoImage src={logoIFCE} alt="Logo IFCE" />
-                    <LabTitle>Laboratório de Ensaios Mecânicos</LabTitle>
+                    <LogoImage src={logoIF} alt="Logo IF" />
+                    <LabTitle>{labName}</LabTitle>
                 </LogoContainer>
                 <MenuContainer>
                     <ProfileLink
