@@ -134,7 +134,7 @@ export default class UserService {
     public async forgotPassword({ email }: ForgotPasswordRequest) {
         const oneHour = 60 * 60 * 1000
         const message =
-            'Caso o email do usuário esteja cadastrado, você recebera um email para alterar a senha.'
+            'Caso o email do usuário esteja cadastrado, você recebera um email para resetar a senha.'
         const mailer = Mailer.getInstance()
 
         const checkUserExists = await this.prisma.users.findFirst({
@@ -147,7 +147,6 @@ export default class UserService {
 
         const resetToken = uuidV4()
         const resetTokenExpiryDate = new Date(Date.now() + oneHour)
-        console.log(' resetToken:', resetToken, resetTokenExpiryDate)
 
         await this.prisma.users.update({
             where: { email },
@@ -157,8 +156,7 @@ export default class UserService {
             },
         })
 
-        // send email
-        const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`
+        const resetLink = `${process.env.FRONTEND_URL}/resetar-senha?token=${resetToken}`
         await mailer.sendMail({
             from: process.env.EMAIL_USER,
             to: email,
@@ -181,7 +179,9 @@ export default class UserService {
         })
 
         if (!checkUserExists) {
-            throw new AppError('Token invalido/expirado.')
+            throw new AppError(
+                'Esse link para alterar a senha está inválido ou expirado. Tente novamente com um novo link',
+            )
         }
 
         const hashedPassword = await hash(newPassword, 8)

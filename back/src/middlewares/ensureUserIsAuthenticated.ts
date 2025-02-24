@@ -25,6 +25,6 @@ export default function ensureUserIsAuthenticated(
         }
         return next()
     } catch {
-        throw new AppError('Token de Usuário invalido.', 401)
+        throw new AppError('Token de Usuário inválido.', 401)
     }
 }
