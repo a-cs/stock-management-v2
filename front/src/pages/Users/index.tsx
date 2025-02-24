@@ -43,7 +43,6 @@ export default function Users() {
                 setTotalCount(response.data.totalCount)
             })
             .catch((error) => {
-                console.log('error:', error)
                 error.message = 'Não foi possivel carregar os dados da tabela.'
                 ErrorHandler(error)
                 setLoading(false)

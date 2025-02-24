@@ -49,7 +49,6 @@ export default function ModalCreateItem({
             setIsOpen(false)
             setButtonLoading(false)
         } catch (error) {
-            console.log('error:', error)
             ErrorHandler(error)
             setButtonLoading(false)
         }

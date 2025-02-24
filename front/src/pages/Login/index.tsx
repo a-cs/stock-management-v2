@@ -1,4 +1,4 @@
-import { LoginContainer, StyledLink } from './styles'
+import { LinkContainer, LoginContainer, StyledLink } from './styles'
 import { useContext, useState } from 'react'
 import { MdLogin } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
@@ -48,7 +48,7 @@ export default function Login() {
                         setValue={setEmail}
                     />
                     <Input
-                        label="Password"
+                        label="Senha"
                         type="password"
                         value={password}
                         setValue={setPassword}
@@ -67,9 +67,14 @@ export default function Login() {
                     >
                         {loading ? 'Loading...' : 'Login'}
                     </Button>
-                    <StyledLink to="/criar-conta">
-                        Criar uma nova conta
-                    </StyledLink>
+                    <LinkContainer>
+                        <StyledLink to="/esqueci-senha">
+                            Esqueci a senha
+                        </StyledLink>
+                        <StyledLink to="/criar-conta">
+                            Criar uma nova conta
+                        </StyledLink>
+                    </LinkContainer>
                 </Form>
             </FormContainer>
         </LoginContainer>

@@ -73,7 +73,6 @@ export default function ModalModalCreateTransaction({
             setIsOpen(false)
             setButtonLoading(false)
         } catch (error) {
-            console.log('error:', error)
             ErrorHandler(error)
             setButtonLoading(false)
         }

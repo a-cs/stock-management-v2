@@ -8,6 +8,8 @@ import Profile from './pages/Profile'
 import Users from './pages/Users'
 import PrivateRouter from './components/PrivateRouter'
 import SignUp from './pages/SignUp'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 
 export function Router() {
     return (
@@ -24,6 +26,8 @@ export function Router() {
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/criar-conta" element={<SignUp />} />
+            <Route path="/esqueci-senha" element={<ForgotPassword />} />
+            <Route path="/resetar-senha" element={<ResetPassword />} />
         </Routes>
     )
 }

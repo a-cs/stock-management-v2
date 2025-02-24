@@ -1,19 +1,17 @@
 import { LoginContainer, StyledLink } from '../Login/styles'
 import { useState } from 'react'
+import { MdLockReset } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import { FormContainer, FormTitle, Form } from '../../components/Form/styles'
-import { FiUserPlus } from 'react-icons/fi'
-import api from '../../services/api'
-import { ErrorHandler } from '../../helpers/ErrorHandler'
-import { toast } from 'react-toastify'
 import SpinnerIcon from '../../components/SpinnerIcon'
+import { ErrorHandler } from '../../helpers/ErrorHandler'
+import api from '../../services/api'
+import { toast } from 'react-toastify'
 
-export default function SignUp() {
-    const [name, setName] = useState('')
+export default function ForgotPassword() {
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
@@ -23,12 +21,10 @@ export default function SignUp() {
         setLoading(false)
         try {
             setLoading(true)
-            await api.post('/users', {
-                name,
+            const { data } = await api.post('/users/forgot-password', {
                 email,
-                password,
             })
-            toast.success('Conta criada com sucesso.')
+            toast.success(data.message)
             navigate('/login')
             setLoading(false)
         } catch (error: any) {
@@ -41,26 +37,14 @@ export default function SignUp() {
         <LoginContainer>
             <FormContainer>
                 <FormTitle>
-                    <h4>Criar Conta</h4>
+                    <h4>Esqueci a senha</h4>
                 </FormTitle>
                 <Form onSubmit={handleSubmit}>
-                    <Input
-                        label="Nome"
-                        type="text"
-                        value={name}
-                        setValue={setName}
-                    />
                     <Input
                         label="Email"
                         type="email"
                         value={email}
                         setValue={setEmail}
-                    />
-                    <Input
-                        label="Senha"
-                        type="password"
-                        value={password}
-                        setValue={setPassword}
                     />
                     <Button
                         type="submit"
@@ -69,12 +53,12 @@ export default function SignUp() {
                             loading ? (
                                 <SpinnerIcon size={32} />
                             ) : (
-                                <FiUserPlus size={32} />
+                                <MdLockReset size={32} />
                             )
                         }
                         disabled={loading}
                     >
-                        {loading ? 'Loading...' : 'Criar'}
+                        {loading ? 'Loading...' : 'Resetar senha'}
                     </Button>
                     <StyledLink to="/login">Voltar ao login</StyledLink>
                 </Form>

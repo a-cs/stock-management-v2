@@ -33,7 +33,6 @@ export default function Profile() {
                 setEmail(response.data.email)
             })
             .catch((error) => {
-                console.log('error:', error)
                 error.message = 'Não foi possivel carregar os dados do perfil.'
                 ErrorHandler(error)
                 setLoading(false)
