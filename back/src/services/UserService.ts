@@ -8,12 +8,7 @@ import { randomUUID as uuidV4 } from 'crypto'
 import { ForgotPasswordRequest } from '../schemas/items/ForgotPasswordSchema'
 import { ResetPasswordRequest } from '../schemas/items/ResetPasswordSchema'
 import { Mailer } from '../helpers/Mailer'
-
-interface iCreateUserRequest {
-    name: string
-    email: string
-    password: string
-}
+import { CreateUserRequest } from '../schemas/items/CreateUserSchema'
 
 interface iPaginationRequest {
     page: number
@@ -49,7 +44,7 @@ export default class UserService {
         return await this.prisma.users.findFirst({ where: { id: Number(id) } })
     }
 
-    public async createUser({ name, email, password }: iCreateUserRequest) {
+    public async createUser({ name, email, password }: CreateUserRequest) {
         const checkUserExists = await this.prisma.users.findFirst({
             where: { email },
         })

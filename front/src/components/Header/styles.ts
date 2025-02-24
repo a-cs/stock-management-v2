@@ -85,6 +85,7 @@ export const ProfileLink = styled(MenuLink)`
 
 export const ProfileName = styled.h3`
     margin-left: 0.5rem;
+    text-align: center;
 `
 
 export const Nav = styled.nav``

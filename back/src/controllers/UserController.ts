@@ -7,6 +7,7 @@ import { UpdateUserPasswordSchema } from '../schemas/items/UpdateUserPasswordSch
 import { ZodError } from 'zod'
 import { ForgotPasswordSchema } from '../schemas/items/ForgotPasswordSchema'
 import { ResetPasswordSchema } from '../schemas/items/ResetPasswordSchema'
+import { CreateUserSchema } from '../schemas/items/CreateUserSchema'
 
 export default class UserController {
     private userService: UserService
@@ -35,13 +36,17 @@ export default class UserController {
     }
 
     public createUser = async (req: Request, res: Response) => {
-        const { name, email, password } = req.body
-        await this.userService.createUser({
-            name,
-            email,
-            password,
-        })
-        res.status(201).send()
+        try {
+            const data = { ...req.body }
+            const validatedData = CreateUserSchema.parse(data)
+            await this.userService.createUser(validatedData)
+            res.status(201).send()
+        } catch (error) {
+            if (error instanceof ZodError) {
+                throw new AppError(error.errors.at(0)?.message || '')
+            }
+            throw new AppError((error as AppError).message)
+        }
     }
 
     public updateUserPermissions = async (req: Request, res: Response) => {

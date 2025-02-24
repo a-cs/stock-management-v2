@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { passwordSchema } from './PasswordSchema'
 
 export const UpdateUserPasswordSchema = z
     .object({
@@ -15,22 +16,12 @@ export const UpdateUserPasswordSchema = z
                 invalid_type_error: 'A senha precisa ser uma string.',
             })
             .min(6, 'A senha precisa conter no mínimo 6 caracteres.'),
-        newPassword: z
-            .string({
-                required_error: 'A nova senha atual é obrigatória.',
-                invalid_type_error: 'A nova senha precisa ser uma string.',
-            })
-            .min(6, 'A nova senha precisa conter no mínimo 6 caracteres.'),
-        confirmNewPassword: z
-            .string({
-                required_error: 'A senha de confirmação atual é obrigatória.',
-                invalid_type_error:
-                    'A senha de confirmação precisa ser uma string.',
-            })
-            .min(
-                6,
-                'A senha de confirmação precisa conter no mínimo 6 caracteres.',
-            ),
+        newPassword: passwordSchema,
+        confirmNewPassword: z.string({
+            required_error: 'A senha de confirmação atual é obrigatória.',
+            invalid_type_error:
+                'A senha de confirmação precisa ser uma string.',
+        }),
     })
     .refine((data) => data.newPassword === data.confirmNewPassword, {
         message:
