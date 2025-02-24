@@ -50,7 +50,6 @@ export default function ModalEditUserPermissions({
 
     useEffect(() => {
         if (isOpen && selectedUser) {
-            console.log('selectedUser:', selectedUser)
             setIsAllowed(selectedUser.is_allowed)
             setIsAdmin(selectedUser.is_admin)
         }

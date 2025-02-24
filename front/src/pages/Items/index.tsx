@@ -122,7 +122,6 @@ export default function Items() {
                         <Table>
                             <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>Nome</th>
                                     <th>Estoque mínimo</th>
                                     <th>Estoque total</th>
@@ -141,13 +140,7 @@ export default function Items() {
                                                 : ''
                                         }
                                     >
-                                        <td data-label="Id">
-                                            {Number(item.id).toLocaleString(
-                                                'pt-BR',
-                                            )}
-                                        </td>
                                         <td data-label="Nome">{item.name}</td>
-
                                         <td data-label="Estoque mínimo">
                                             {Number(
                                                 item.minimal_stock_alarm,

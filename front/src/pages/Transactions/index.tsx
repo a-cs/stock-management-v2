@@ -126,7 +126,6 @@ export default function Transactions() {
                         <Table>
                             <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>Data/Hora</th>
                                     <th>Realizado por</th>
                                     <th>Item</th>
@@ -139,11 +138,6 @@ export default function Transactions() {
                                 {transactions.map(
                                     (transaction: iTransaction) => (
                                         <tr key={transaction.id}>
-                                            <td data-label="Id">
-                                                {Number(
-                                                    transaction.id,
-                                                ).toLocaleString('pt-BR')}
-                                            </td>
                                             <td data-label="Data/Hora">
                                                 {new Date(
                                                     transaction.created_at,

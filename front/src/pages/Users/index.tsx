@@ -95,7 +95,6 @@ export default function Users() {
                         <Table>
                             <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>Nome</th>
                                     <th>Email</th>
                                     <th>Admin</th>
@@ -106,11 +105,6 @@ export default function Users() {
                             <tbody>
                                 {units.map((user: iUser) => (
                                     <tr key={user.id}>
-                                        <td data-label="Id">
-                                            {Number(user.id).toLocaleString(
-                                                'pt-BR',
-                                            )}
-                                        </td>
                                         <td data-label="Nome">{user.name}</td>
                                         <td data-label="Email">{user.email}</td>
                                         <td data-label="Admin">

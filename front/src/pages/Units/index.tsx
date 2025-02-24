@@ -115,7 +115,6 @@ export default function Units() {
                         <Table>
                             <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>Unidade</th>
                                     <th>Editar</th>
                                 </tr>
@@ -123,11 +122,6 @@ export default function Units() {
                             <tbody>
                                 {units.map((unit: iUnit) => (
                                     <tr key={unit.id}>
-                                        <td data-label="Id">
-                                            {Number(unit.id).toLocaleString(
-                                                'pt-BR',
-                                            )}
-                                        </td>
                                         <td data-label="Unidade">
                                             {unit.symbol}
                                         </td>
