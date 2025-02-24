@@ -22,7 +22,8 @@ export default function Pagination({
     return (
         <PaginationContainer>
             <CurrentPageData>
-                Resultado {(currentPage - 1) * pageSize + 1} -{' '}
+                Resultado{' '}
+                {totalCount > 0 ? `${(currentPage - 1) * pageSize + 1} - ` : ''}
                 {currentPage * pageSize < totalCount
                     ? currentPage * pageSize
                     : totalCount}{' '}

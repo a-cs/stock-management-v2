@@ -2,7 +2,7 @@ import { styled } from 'styled-components'
 
 export const LayoutContainer = styled.main`
     width: 100%;
-    min-height: 86vh;
+    min-height: 78vh;
     display: flex;
     flex-direction: column;
     align-items: center;

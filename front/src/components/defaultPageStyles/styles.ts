@@ -59,8 +59,8 @@ export const ButtonMobile = styled(BaseButton)`
     font-size: 1.5rem;
     position: fixed;
     z-index: 1;
-    bottom: 1rem;
-    right: 1rem;
+    bottom: 7.5rem;
+    right: 0.5rem;
 
     @media (min-width: 1000px) {
         display: none;
