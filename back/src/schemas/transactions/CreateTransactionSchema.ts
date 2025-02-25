@@ -13,8 +13,7 @@ export const CreateTransactionSchema = z.object({
             required_error: 'O item_quantity é obrigatório.',
             invalid_type_error: 'O item_quantity precisa ser um número.',
         })
-        .int('A quantidade do item precisar ser inteiro.')
-        .min(1, 'A quantidade do item precisar ser maior que zero.'),
+        .gt(0, 'A quantidade do item precisar ser maior que zero.'),
     type: z.enum(['in', 'out'], {
         errorMap: (_issue, _ctx) => ({
             message: 'Tipo de transação não permitido.',

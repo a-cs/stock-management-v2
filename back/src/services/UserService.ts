@@ -3,12 +3,12 @@ import AppError from '../errors/AppError'
 import { compare, hash } from 'bcrypt'
 import { Prisma } from '../helpers/PrismaClient'
 import createUserDTO from '../DTOs/userDTO'
-import { UpdateUserPasswordRequest } from '../schemas/items/UpdateUserPasswordSchema'
+import { UpdateUserPasswordRequest } from '../schemas/users/UpdateUserPasswordSchema'
 import { randomUUID as uuidV4 } from 'crypto'
-import { ForgotPasswordRequest } from '../schemas/items/ForgotPasswordSchema'
-import { ResetPasswordRequest } from '../schemas/items/ResetPasswordSchema'
+import { ForgotPasswordRequest } from '../schemas/users/ForgotPasswordSchema'
+import { ResetPasswordRequest } from '../schemas/users/ResetPasswordSchema'
 import { Mailer } from '../helpers/Mailer'
-import { CreateUserRequest } from '../schemas/items/CreateUserSchema'
+import { CreateUserRequest } from '../schemas/users/CreateUserSchema'
 
 interface iPaginationRequest {
     page: number

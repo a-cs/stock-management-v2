@@ -3,11 +3,11 @@ import { Request, Response } from 'express'
 import UserService from '../services/UserService'
 import createUserDTO from '../DTOs/userDTO'
 import AppError from '../errors/AppError'
-import { UpdateUserPasswordSchema } from '../schemas/items/UpdateUserPasswordSchema'
+import { UpdateUserPasswordSchema } from '../schemas/users/UpdateUserPasswordSchema'
 import { ZodError } from 'zod'
-import { ForgotPasswordSchema } from '../schemas/items/ForgotPasswordSchema'
-import { ResetPasswordSchema } from '../schemas/items/ResetPasswordSchema'
-import { CreateUserSchema } from '../schemas/items/CreateUserSchema'
+import { ForgotPasswordSchema } from '../schemas/users/ForgotPasswordSchema'
+import { ResetPasswordSchema } from '../schemas/users/ResetPasswordSchema'
+import { CreateUserSchema } from '../schemas/users/CreateUserSchema'
 
 export default class UserController {
     private userService: UserService

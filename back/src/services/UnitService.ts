@@ -1,9 +1,6 @@
 import AppError from '../errors/AppError'
 import { Prisma } from '../helpers/PrismaClient'
-
-interface iCreateUnitRequest {
-    symbol: string
-}
+import { CreateUnitRequest } from '../schemas/units/CreateUnitSchema'
 
 interface iUpdateUnitRequest {
     id: string
@@ -41,7 +38,7 @@ export default class UnitService {
         }
     }
 
-    public async createUnit({ symbol }: iCreateUnitRequest) {
+    public async createUnit({ symbol }: CreateUnitRequest) {
         const checkUnitExists = await this.prisma.units.findFirst({
             where: { symbol },
         })

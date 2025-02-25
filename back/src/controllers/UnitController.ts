@@ -1,5 +1,8 @@
 import { Request, Response } from 'express'
 import UnitService from '../services/UnitService'
+import { CreateUnitSchema } from '../schemas/units/CreateUnitSchema'
+import AppError from '../errors/AppError'
+import { ZodError } from 'zod'
 
 export default class UnitController {
     private unitService: UnitService
@@ -23,11 +26,17 @@ export default class UnitController {
     }
 
     public createUnit = async (req: Request, res: Response) => {
-        const { symbol } = req.body
-        await this.unitService.createUnit({
-            symbol,
-        })
-        res.status(201).send()
+        try {
+            const data = { ...req.body }
+            const validatedData = CreateUnitSchema.parse(data)
+            await this.unitService.createUnit(validatedData)
+            res.status(201).send()
+        } catch (error) {
+            if (error instanceof ZodError) {
+                throw new AppError(error.errors.at(0)?.message || '')
+            }
+            throw new AppError((error as AppError).message)
+        }
     }
 
     public updateUnit = async (req: Request, res: Response) => {
