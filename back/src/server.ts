@@ -27,6 +27,6 @@ async function initialize() {
 }
 initialize()
 
-app.listen(process.env.PORT || 3333, () => {
-    console.log(`Server started on port ${process.env.PORT || 3333}!`)
+app.listen(process.env.BACK_PORT || 3333, () => {
+    console.log(`Server started on port ${process.env.BACK_PORT || 3333}!`)
 })

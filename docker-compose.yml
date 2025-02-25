@@ -1,0 +1,79 @@
+services:
+    db:
+        image: postgres:latest
+        container_name: postgres_db
+        restart: unless-stopped
+        env_file:
+            - .env
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_DB=${DB_NAME}
+        ports:
+            - 5432:${DB_PORT}
+
+    back:
+        build:
+            context: ./back
+            args:
+                - BACK_DOMAIN=${BACK_DOMAIN}
+                - DATABASE_URL=${DATABASE_URL}
+                - APP_SECRET=${APP_SECRET}
+                - BACK_PORT=${BACK_PORT}
+                - FRONTEND_URL=${FRONTEND_URL}
+                - LAB_NAME=${LAB_NAME}
+                - EMAIL_ADDRESS=${EMAIL_ADDRESS}
+                - EMAIL_APP_KEY=${EMAIL_APP_KEY}
+                - FIRST_USER_NAME=${FIRST_USER_NAME}
+                - FIRST_USER_EMAIL=${FIRST_USER_EMAIL}
+                - FIRST_USER_PASSWORD=${FIRST_USER_PASSWORD}
+        image: ifstoq_back
+        container_name: ifstoq_back
+        restart: unless-stopped
+        depends_on:
+            - db
+        env_file:
+            - .env
+        environment:
+            DATABASE_URL: ${DATABASE_URL}
+            APP_SECRET: ${APP_SECRET}
+            BACK_PORT: ${BACK_PORT}
+            FRONTEND_URL: ${FRONTEND_URL}
+            LAB_NAME: ${LAB_NAME}
+            EMAIL_ADDRESS: ${EMAIL_ADDRESS}
+            EMAIL_APP_KEY: ${EMAIL_APP_KEY}
+            FIRST_USER_NAME: ${FIRST_USER_NAME}
+            FIRST_USER_EMAIL: ${FIRST_USER_EMAIL}
+            FIRST_USER_PASSWORD: ${FIRST_USER_PASSWORD}
+        ports:
+            - 4000:${BACK_PORT}
+        # volumes:
+        #     - ./back:/srcs
+        command: >
+            sh -c "npx prisma generate && 
+            npx prisma migrate deploy && 
+            npm run start"
+
+    front:
+        build:
+            context: ./front
+            args:
+                - VITE_BACKEND_URL=${VITE_BACKEND_URL}
+                - VITE_LAB_NAME=${VITE_LAB_NAME}
+        image: ifstoq_front
+        container_name: ifstoq_front
+        restart: unless-stopped
+        depends_on:
+            - back
+        env_file:
+            - .env
+        environment:
+            VITE_BACKEND_URL: ${VITE_BACKEND_URL}
+            VITE_LAB_NAME: ${VITE_LAB_NAME}
+        ports:
+            - 3000:${FRONT_PORT}
+
+volumes:
+  postgres_data:
