@@ -4,6 +4,7 @@ import express from 'express'
 import cors from 'cors'
 import routes from './routes'
 import errorHandler from './middlewares/errorHandler'
+import RunOnServerStartup from './config/RunOnServerStartup'
 
 const app = express()
 const corsOptions = {
@@ -15,6 +16,16 @@ app.use(express.json())
 app.use(routes)
 
 app.use(errorHandler as unknown as express.ErrorRequestHandler)
+
+async function initialize() {
+    try {
+        const onServerStartup = new RunOnServerStartup()
+        await onServerStartup.createFirstUserIfServerIsEmpty()
+    } catch (error) {
+        console.error('❌ Error running startup functions:', error)
+    }
+}
+initialize()
 
 app.listen(process.env.PORT || 3333, () => {
     console.log(`Server started on port ${process.env.PORT || 3333}!`)
