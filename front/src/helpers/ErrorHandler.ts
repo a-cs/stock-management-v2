@@ -11,7 +11,6 @@ export function ErrorHandler(error: unknown) {
         toast((error as Error).message, {
             type: 'error',
             draggable: false,
-            toastId: 'error',
         })
     }
 }

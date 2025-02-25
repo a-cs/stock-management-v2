@@ -86,8 +86,14 @@ export default function ModalModalCreateTransaction({
             setType('in')
             api.get('/items')
                 .then((response) => {
-                    setItems(response.data)
-                    setItemId(response.data[0].id)
+                    if (!response.data.length) {
+                        throw new Error(
+                            'Para poder realizar essa ação, você precisa cadastrar um item primeiro.',
+                        )
+                    } else {
+                        setItems(response.data)
+                        setItemId(response.data[0].id)
+                    }
                     setLoading(false)
                 })
                 .catch((error) => {

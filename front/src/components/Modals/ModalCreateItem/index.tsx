@@ -61,8 +61,14 @@ export default function ModalCreateItem({
             setUnitId('')
             api.get('/units')
                 .then((response) => {
-                    setUnits(response.data)
-                    setUnitId(response.data[0].id)
+                    if (!response.data.length) {
+                        throw new Error(
+                            'Para poder realizar essa ação, você precisa cadastrar uma unidade primeiro.',
+                        )
+                    } else {
+                        setUnits(response.data)
+                        setUnitId(response.data[0].id)
+                    }
                     setLoading(false)
                 })
                 .catch((error) => {
